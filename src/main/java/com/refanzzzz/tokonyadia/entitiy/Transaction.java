@@ -25,5 +25,11 @@ public class Transaction {
     private LocalDateTime transactionDate;
 
     @ManyToOne
+    @JoinColumn(name = "customer_id")
     private Customer customer;
+
+    @PrePersist
+    protected void prePersist() {
+        this.transactionDate = LocalDateTime.now();
+    }
 }

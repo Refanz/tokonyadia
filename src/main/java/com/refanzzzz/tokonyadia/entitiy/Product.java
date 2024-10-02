@@ -31,5 +31,6 @@ public class Product {
     private Integer stock;
 
     @ManyToOne
+    @JoinColumn(name = "store_id")
     private Store store;
 }

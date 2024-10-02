@@ -25,8 +25,10 @@ public class TransactionDetail {
     private Long price;
 
     @ManyToOne
+    @JoinColumn(name = "transaction_id")
     private Transaction transaction;
 
     @ManyToOne
+    @JoinColumn(name = "product_id")
     private Product product;
 }
