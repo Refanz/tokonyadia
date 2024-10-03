@@ -1,33 +1,34 @@
 package com.refanzzzz.tokonyadia.service.impl;
 
-import com.refanzzzz.tokonyadia.entitiy.Transaction;
+import com.refanzzzz.tokonyadia.dto.request.TransactionRequest;
+import com.refanzzzz.tokonyadia.dto.response.TransactionResponse;
 import com.refanzzzz.tokonyadia.service.TransactionService;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
 
 public class TransactionDetailServiceImpl implements TransactionService {
-    @Override
-    public List<Transaction> getAllTransaction() {
-        return List.of();
-    }
 
     @Override
-    public Transaction getTransactionById(String id) {
+    public Page<TransactionResponse> getAll(Integer page, Integer size, String sort) {
         return null;
     }
 
     @Override
-    public Transaction addTransaction(Transaction transaction) {
+    public TransactionResponse getById(String id) {
         return null;
     }
 
     @Override
-    public Transaction updateStore(String id, Transaction transaction) {
+    public TransactionResponse insert(TransactionRequest data) {
         return null;
     }
 
     @Override
-    public String deleteTransactionById(String id) {
-        return "";
+    public void remove(String id) {
+
+    }
+
+    @Override
+    public TransactionResponse update(String id, TransactionRequest data) {
+        return null;
     }
 }

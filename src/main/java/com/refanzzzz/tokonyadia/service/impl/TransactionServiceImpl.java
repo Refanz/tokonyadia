@@ -1,33 +1,90 @@
 package com.refanzzzz.tokonyadia.service.impl;
 
+import com.refanzzzz.tokonyadia.dto.request.TransactionRequest;
+import com.refanzzzz.tokonyadia.dto.response.TransactionResponse;
 import com.refanzzzz.tokonyadia.entitiy.Transaction;
+import com.refanzzzz.tokonyadia.repository.TransactionRepository;
 import com.refanzzzz.tokonyadia.service.TransactionService;
+import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
-import java.util.List;
+import java.util.Optional;
+import java.util.function.Function;
 
+@Service
+@AllArgsConstructor
 public class TransactionServiceImpl implements TransactionService {
+
+    private TransactionRepository transactionRepository;
+
     @Override
-    public List<Transaction> getAllTransaction() {
-        return List.of();
+    public Page<TransactionResponse> getAll(Integer page, Integer size, String sort) {
+        if (page <= 0) page = 1;
+
+        Pageable pageable = PageRequest.of(page - 1, size);
+        Page<Transaction> transactionPage = transactionRepository.findAll(pageable);
+
+        return transactionPage.map(new Function<Transaction, TransactionResponse>() {
+            @Override
+            public TransactionResponse apply(Transaction transaction) {
+                return toTransactionResponse(transaction);
+            }
+        });
     }
 
     @Override
-    public Transaction getTransactionById(String id) {
-        return null;
+    public TransactionResponse getById(String id) {
+        Transaction transaction = getTransaction(id);
+        if (transaction == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Transaction is not found!");
+
+        return toTransactionResponse(transaction);
     }
 
     @Override
-    public Transaction addTransaction(Transaction transaction) {
-        return null;
+    public TransactionResponse insert(TransactionRequest data) {
+        Transaction transaction = Transaction.builder()
+                .transactionDate(data.getTransactionDate())
+                .build();
+
+        transactionRepository.saveAndFlush(transaction);
+        return toTransactionResponse(transaction);
     }
 
     @Override
-    public Transaction updateStore(String id, Transaction transaction) {
-        return null;
+    public void remove(String id) {
+        Transaction transaction = getTransaction(id);
+        if (transaction == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Transaction is not found");
+
+        transactionRepository.delete(transaction);
     }
 
     @Override
-    public String deleteTransactionById(String id) {
-        return "";
+    public TransactionResponse update(String id, TransactionRequest data) {
+        Transaction transaction = getTransaction(id);
+
+        if (transaction == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Transaction is not found");
+
+        transaction.setTransactionDate(data.getTransactionDate());
+        transactionRepository.saveAndFlush(transaction);
+
+        return toTransactionResponse(transaction);
+    }
+
+    private TransactionResponse toTransactionResponse(Transaction transaction) {
+        return TransactionResponse.builder()
+                .id(transaction.getId())
+                .transactionDate(transaction.getTransactionDate())
+                .customer(transaction.getCustomer())
+                .build();
+    }
+
+    private Transaction getTransaction(String id) {
+        Optional<Transaction> optionalTransaction = transactionRepository.findById(id);
+        return optionalTransaction.orElse(null);
     }
 }

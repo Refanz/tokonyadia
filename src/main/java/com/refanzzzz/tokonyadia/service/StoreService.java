@@ -1,6 +1,5 @@
 package com.refanzzzz.tokonyadia.service;
 
-import com.refanzzzz.tokonyadia.entitiy.Product;
 import com.refanzzzz.tokonyadia.entitiy.Store;
 
 import java.util.List;

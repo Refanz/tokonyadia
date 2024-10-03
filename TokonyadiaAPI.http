@@ -1,0 +1,8 @@
+### GET All Product
+GET localhost:8081/api/product
+
+### GET All Transaction
+GET localhost:8081/api/transaction
+
+### GET Transaction By ID
+GET localhost:8081/api/transaction/f91b494d-d2fe-476b-8e18-0a62b9077374

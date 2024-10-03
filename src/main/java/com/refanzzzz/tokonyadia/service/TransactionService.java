@@ -1,17 +1,7 @@
 package com.refanzzzz.tokonyadia.service;
 
-import com.refanzzzz.tokonyadia.entitiy.Transaction;
+import com.refanzzzz.tokonyadia.dto.request.TransactionRequest;
+import com.refanzzzz.tokonyadia.dto.response.TransactionResponse;
 
-import java.util.List;
-
-public interface TransactionService {
-    List<Transaction> getAllTransaction();
-
-    Transaction getTransactionById(String id);
-
-    Transaction addTransaction(Transaction transaction);
-
-    Transaction updateStore(String id, Transaction transaction);
-
-    String deleteTransactionById(String id);
+public interface TransactionService extends Service<TransactionResponse, TransactionRequest> {
 }

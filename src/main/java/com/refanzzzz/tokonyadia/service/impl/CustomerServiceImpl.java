@@ -37,16 +37,16 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public Customer updateCustomer(String id, Customer customer) {
         Optional<Customer> customerOptional = customerRepository.findById(id);
-
-        if (customerOptional.isPresent()) {
-            Customer updateCustomer = customerOptional.get();
-            updateCustomer.setName(customer.getName());
-            updateCustomer.setEmail(customer.getEmail());
-            updateCustomer.setAddress(customer.getAddress());
-            updateCustomer.setPhoneNumber(customer.getPhoneNumber());
-
-            return customerRepository.save(updateCustomer);
-        }
+//
+//        if (customerOptional.isPresent()) {
+//            Customer updateCustomer = customerOptional.get();
+//            updateCustomer.setName(customer.getName());
+//            updateCustomer.setEmail(customer.getEmail());
+//            updateCustomer.setAddress(customer.getAddress());
+//            updateCustomer.setPhoneNumber(customer.getPhoneNumber());
+//
+//            return customerRepository.save(updateCustomer);
+//        }
 
         throw new RuntimeException("Customer tidak ada!");
     }
