@@ -1,13 +1,14 @@
 package com.refanzzzz.tokonyadia.dto.request;
 
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
 @Getter
-@Builder
-public class TransactionDetailRequest {
+@SuperBuilder
+public class TransactionDetailRequest extends SearchingPagingAndSortingRequest {
     private Long price;
     private Integer qty;
     private String productId;

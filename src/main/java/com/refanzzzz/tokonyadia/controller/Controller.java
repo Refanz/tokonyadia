@@ -4,7 +4,7 @@ import org.springframework.http.ResponseEntity;
 
 public interface Controller<T, U> {
 
-    ResponseEntity<T> getAll(Integer page, Integer size, String sort);
+    ResponseEntity<T> getAll(String query, Integer page, Integer size, String sort);
 
     ResponseEntity<T> getById(String id);
 

@@ -1,41 +1,66 @@
 package com.refanzzzz.tokonyadia.controller;
 
-import com.refanzzzz.tokonyadia.entitiy.Customer;
+import com.refanzzzz.tokonyadia.dto.request.CustomerRequest;
+import com.refanzzzz.tokonyadia.dto.response.CommonResponse;
+import com.refanzzzz.tokonyadia.dto.response.CustomerResponse;
 import com.refanzzzz.tokonyadia.service.CustomerService;
+import com.refanzzzz.tokonyadia.util.ResponseUtil;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/customer")
 @AllArgsConstructor
-public class CustomerController {
+public class CustomerController implements Controller<CommonResponse<CustomerResponse>, CustomerRequest> {
 
     private CustomerService customerService;
 
     @GetMapping
-    public List<Customer> getAllCustomer() {
-        return customerService.getAllCustomer();
+    @Override
+    public ResponseEntity<CommonResponse<CustomerResponse>> getAll(
+            @RequestParam(name = "q", required = false) String query,
+            @RequestParam(name = "page", required = false, defaultValue = "1") Integer page,
+            @RequestParam(name = "size", required = false, defaultValue = "10") Integer size,
+            @RequestParam(name = "sort", required = false) String sort) {
+
+
+        CustomerRequest customerRequest = CustomerRequest.builder()
+                .query(query)
+                .page(page)
+                .size(size)
+                .sortBy(sort)
+                .build();
+
+        Page<CustomerResponse> customerResponsePage = customerService.getAll(customerRequest);
+        return ResponseUtil.createResponseWithPaging(HttpStatus.OK, "Successfully get all customer", customerResponsePage);
     }
 
     @GetMapping("/{id}")
-    public Customer getCustomerById(@PathVariable String id) {
-        return customerService.getCustomerById(id);
+    @Override
+    public ResponseEntity<CommonResponse<CustomerResponse>> getById(@PathVariable String id) {
+        CustomerResponse customerResponse = customerService.getById(id);
+        return ResponseUtil.createResponse(HttpStatus.OK, "Successfully get customer by id", customerResponse);
     }
 
     @PostMapping
-    public Customer addCustomer(@RequestBody Customer customer) {
-        return customerService.addCustomer(customer);
+    @Override
+    public ResponseEntity<CommonResponse<CustomerResponse>> insert(@RequestBody CustomerRequest request) {
+        CustomerResponse customerResponse = customerService.insert(request);
+        return ResponseUtil.createResponse(HttpStatus.CREATED, "Successfuly create new customer", customerResponse);
     }
 
-    @PutMapping("/{id}")
-    public Customer updateCustomer(@PathVariable String id, @RequestBody Customer customer) {
-        return customerService.updateCustomer(id, customer);
+    @Override
+    public ResponseEntity<CommonResponse<CustomerResponse>> remove(String id) {
+        customerService.remove(id);
+        return ResponseUtil.createResponse(HttpStatus.NO_CONTENT, "Successfully delete customer with id: " + id, null);
     }
 
-    @DeleteMapping("/{id}")
-    public String deleteCustomerById(@PathVariable String id) {
-        return customerService.deleteCustomerById(id);
+    @Override
+    public ResponseEntity<CommonResponse<CustomerResponse>> update(String id, CustomerRequest request) {
+        CustomerResponse customerResponse = customerService.update(id, request);
+        return ResponseUtil.createResponse(HttpStatus.OK, "Successfully update customer with id: " + id, customerResponse);
     }
 }

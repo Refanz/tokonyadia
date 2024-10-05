@@ -23,10 +23,8 @@ public class TransactionServiceImpl implements TransactionService {
     private TransactionRepository transactionRepository;
 
     @Override
-    public Page<TransactionResponse> getAll(Integer page, Integer size, String sort) {
-        if (page <= 0) page = 1;
-
-        Pageable pageable = PageRequest.of(page - 1, size);
+    public Page<TransactionResponse> getAll(TransactionRequest request) {
+        Pageable pageable = PageRequest.of(request.getPage(), request.getPage());
         Page<Transaction> transactionPage = transactionRepository.findAll(pageable);
 
         return transactionPage.map(new Function<Transaction, TransactionResponse>() {

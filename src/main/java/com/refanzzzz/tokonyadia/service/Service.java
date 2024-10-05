@@ -3,7 +3,7 @@ package com.refanzzzz.tokonyadia.service;
 import org.springframework.data.domain.Page;
 
 public interface Service<T, U> {
-    Page<T> getAll(Integer page, Integer size, String sort);
+    Page<T> getAll(U request);
 
     T getById(String id);
 

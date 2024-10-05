@@ -22,12 +22,15 @@ public class TransactionController implements Controller<CommonResponse<Transact
     @GetMapping
     @Override
     public ResponseEntity<CommonResponse<TransactionResponse>> getAll(
+            @RequestParam(name = "query", required = false) String query,
             @RequestParam(name = "page", required = false, defaultValue = "1") Integer page,
             @RequestParam(name = "size", required = false, defaultValue = "10") Integer size,
             @RequestParam(name = "sort", required = false) String sort) {
 
-        Page<TransactionResponse> transactionResponsePage = transactionService.getAll(page, size, sort);
-        return ResponseUtil.createResponseWithPaging(HttpStatus.OK, "Successfully get all transaction", transactionResponsePage);
+        return null;
+//
+//        Page<TransactionResponse> transactionResponsePage = transactionService.getAll(page, size, sort);
+//        return ResponseUtil.createResponseWithPaging(HttpStatus.OK, "Successfully get all transaction", transactionResponsePage);
     }
 
     @GetMapping("/{id}")

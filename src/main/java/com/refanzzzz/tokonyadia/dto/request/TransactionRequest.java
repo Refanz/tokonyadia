@@ -1,6 +1,7 @@
 package com.refanzzzz.tokonyadia.dto.request;
 
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDateTime;
 
@@ -8,8 +9,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Getter
 @Setter
-@Builder
-public class TransactionRequest {
+@SuperBuilder
+public class TransactionRequest extends SearchingPagingAndSortingRequest {
     private LocalDateTime transactionDate;
     private String customerId;
 }

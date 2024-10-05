@@ -1,18 +1,8 @@
 package com.refanzzzz.tokonyadia.service;
 
-import com.refanzzzz.tokonyadia.entitiy.Store;
+import com.refanzzzz.tokonyadia.dto.request.StoreRequest;
+import com.refanzzzz.tokonyadia.dto.response.StoreResponse;
 
-import java.util.List;
+public interface StoreService extends Service<StoreResponse, StoreRequest> {
 
-public interface StoreService {
-
-    List<Store> getAllStore();
-
-    Store getStoreById(String id);
-
-    Store addStore(Store store);
-
-    Store updateStore(String id, Store store);
-
-    String deleteStoreById(String id);
 }

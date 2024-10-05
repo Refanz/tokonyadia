@@ -8,7 +8,7 @@ import org.springframework.data.domain.Page;
 public class TransactionDetailServiceImpl implements TransactionService {
 
     @Override
-    public Page<TransactionResponse> getAll(Integer page, Integer size, String sort) {
+    public Page<TransactionResponse> getAll(TransactionRequest request) {
         return null;
     }
 

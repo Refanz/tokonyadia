@@ -1,14 +1,14 @@
-package com.refanzzzz.tokonyadia.dto.request;
+package com.refanzzzz.tokonyadia.dto.response;
 
 import lombok.*;
-import lombok.experimental.SuperBuilder;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
 @Getter
-@SuperBuilder
-public class CustomerRequest extends SearchingPagingAndSortingRequest {
+@Builder
+public class CustomerResponse {
+    private String id;
     private String name;
     private String email;
     private String address;

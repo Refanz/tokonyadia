@@ -1,6 +1,9 @@
 package com.refanzzzz.tokonyadia.dto.request;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 @AllArgsConstructor
@@ -8,9 +11,9 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @Getter
 @SuperBuilder
-public class CustomerRequest extends SearchingPagingAndSortingRequest {
+public class StoreRequest extends SearchingPagingAndSortingRequest{
     private String name;
-    private String email;
+    private String noSiup;
     private String address;
     private String phoneNumber;
 }
