@@ -19,7 +19,7 @@ public class StoreSpecification {
                 List<Predicate> predicates = new ArrayList<>();
 
                 if (request.getQuery() != null) {
-                    Predicate predicate = criteriaBuilder.like(root.get("name"), request.getName() + "%");
+                    Predicate predicate = criteriaBuilder.like(root.get("name"), request.getQuery() + "%");
                     predicates.add(predicate);
                 }
 

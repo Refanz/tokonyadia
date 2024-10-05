@@ -26,3 +26,6 @@ Content-Type: application/json
 
 ### GET Customer
 GET localhost:8081/api/customer?sort=-name
+
+### GET Store
+GET localhost:8081/api/store?q=Toko Jakut
