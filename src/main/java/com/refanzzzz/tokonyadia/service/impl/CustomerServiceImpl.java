@@ -45,7 +45,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public CustomerResponse getById(String id) {
-        Customer customer = getCustomer(id);
+        Customer customer = getOne(id);
 
         return CustomerResponse.builder()
                 .id(customer.getId())
@@ -71,13 +71,13 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public void remove(String id) {
-        Customer customer = getCustomer(id);
+        Customer customer = getOne(id);
         customerRepository.delete(customer);
     }
 
     @Override
     public CustomerResponse update(String id, CustomerRequest data) {
-        Customer customer = getCustomer(id);
+        Customer customer = getOne(id);
 
         customer.setName(data.getName());
         customer.setEmail(data.getEmail());
@@ -88,9 +88,9 @@ public class CustomerServiceImpl implements CustomerService {
         return toCustomerResponse(savedCustomer);
     }
 
-    private Customer getCustomer(String id) {
-        Optional<Customer> customerOptional = customerRepository.findById(id);
-        return customerOptional.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Customer is not found!"));
+    @Override
+    public Customer getOne(String id) {
+        return customerRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Customer is not found!"));
     }
 
     private CustomerResponse toCustomerResponse(Customer customer) {

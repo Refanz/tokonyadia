@@ -11,8 +11,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import static com.refanzzzz.tokonyadia.constant.Constant.STORE_API;
+
 @RestController
-@RequestMapping("/api/store")
+@RequestMapping(STORE_API)
 @AllArgsConstructor
 public class StoreController implements Controller<CommonResponse<StoreResponse>, StoreRequest> {
 

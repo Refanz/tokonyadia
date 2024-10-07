@@ -6,7 +6,6 @@ import com.refanzzzz.tokonyadia.dto.response.StoreResponse;
 import com.refanzzzz.tokonyadia.entity.Product;
 import com.refanzzzz.tokonyadia.entity.Store;
 import com.refanzzzz.tokonyadia.repository.ProductRepository;
-import com.refanzzzz.tokonyadia.repository.StoreRepository;
 import com.refanzzzz.tokonyadia.service.ProductService;
 import com.refanzzzz.tokonyadia.service.StoreService;
 import com.refanzzzz.tokonyadia.specification.ProductSpecification;
@@ -21,7 +20,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.Optional;
 import java.util.function.Function;
 
 @Service
@@ -49,8 +47,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductResponse getById(String id) {
-        Product product = getProduct(id);
-        if (product == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Product is not found!");
+        Product product = getOne(id);
         return toProductResponse(product);
     }
 
@@ -81,16 +78,14 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void remove(String id) {
-        Product product = getProduct(id);
-        if (product == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Product is not found!");
-        productRepository.deleteById(id);
+        Product product = getOne(id);
+        productRepository.delete(product);
     }
 
     @Override
     public ProductResponse update(String id, ProductRequest data) {
-        Product product = getProduct(id);
+        Product product = getOne(id);
 
-        if (product == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Product is not found!");
         product.setName(data.getName());
         product.setDescription(data.getDescription());
         product.setStock(data.getStock());
@@ -112,7 +107,8 @@ public class ProductServiceImpl implements ProductService {
                 .build();
     }
 
-    private Product getProduct(String id) {
-        return productRepository.findById(id).orElse(null);
+    @Override
+    public Product getOne(String id) {
+        return productRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Product is not found!"));
     }
 }

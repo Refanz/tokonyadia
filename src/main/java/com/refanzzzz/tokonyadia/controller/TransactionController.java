@@ -12,8 +12,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import static com.refanzzzz.tokonyadia.constant.Constant.TRANSACTION_API;
+
 @RestController
-@RequestMapping(Constant.TRANSACTION_URL)
+@RequestMapping(TRANSACTION_API)
 @AllArgsConstructor
 public class TransactionController implements Controller<CommonResponse<TransactionResponse>, TransactionRequest> {
 
@@ -27,10 +29,16 @@ public class TransactionController implements Controller<CommonResponse<Transact
             @RequestParam(name = "size", required = false, defaultValue = "10") Integer size,
             @RequestParam(name = "sort", required = false) String sort) {
 
-        return null;
-//
-//        Page<TransactionResponse> transactionResponsePage = transactionService.getAll(page, size, sort);
-//        return ResponseUtil.createResponseWithPaging(HttpStatus.OK, "Successfully get all transaction", transactionResponsePage);
+        TransactionRequest transactionRequest = TransactionRequest
+                .builder()
+                .query(query)
+                .page(page)
+                .size(size)
+                .sortBy(sort)
+                .build();
+
+        Page<TransactionResponse> transactionResponsePage = transactionService.getAll(transactionRequest);
+        return ResponseUtil.createResponseWithPaging(HttpStatus.OK, "Successfully get all transaction", transactionResponsePage);
     }
 
     @GetMapping("/{id}")
@@ -40,18 +48,24 @@ public class TransactionController implements Controller<CommonResponse<Transact
         return ResponseUtil.createResponse(HttpStatus.OK, "Successfully get transaction", transactionResponse);
     }
 
+    @PostMapping
     @Override
-    public ResponseEntity<CommonResponse<TransactionResponse>> insert(TransactionRequest request) {
-        return null;
+    public ResponseEntity<CommonResponse<TransactionResponse>> insert(@RequestBody TransactionRequest request) {
+        TransactionResponse transactionResponse = transactionService.insert(request);
+        return ResponseUtil.createResponse(HttpStatus.CREATED, "Successfully create transaction", transactionResponse);
     }
 
+    @DeleteMapping("/{id}")
     @Override
-    public ResponseEntity<CommonResponse<TransactionResponse>> remove(String id) {
-        return null;
+    public ResponseEntity<CommonResponse<TransactionResponse>> remove(@PathVariable String id) {
+        transactionService.remove(id);
+        return ResponseUtil.createResponse(HttpStatus.OK, "Succcessfully delete transaction with id: " + id, null);
     }
 
+    @PutMapping("/{id}")
     @Override
-    public ResponseEntity<CommonResponse<TransactionResponse>> update(String id, TransactionRequest request) {
-        return null;
+    public ResponseEntity<CommonResponse<TransactionResponse>> update(@PathVariable String id, @RequestBody TransactionRequest request) {
+        TransactionResponse transactionResponse = transactionService.update(id, request);
+        return ResponseUtil.createResponse(HttpStatus.OK, "Successfully update transaction", transactionResponse);
     }
 }

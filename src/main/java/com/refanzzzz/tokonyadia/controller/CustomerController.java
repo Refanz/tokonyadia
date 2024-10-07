@@ -11,8 +11,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import static com.refanzzzz.tokonyadia.constant.Constant.CUSTOMER_API;
+
 @RestController
-@RequestMapping("/api/customer")
+@RequestMapping(CUSTOMER_API)
 @AllArgsConstructor
 public class CustomerController implements Controller<CommonResponse<CustomerResponse>, CustomerRequest> {
 

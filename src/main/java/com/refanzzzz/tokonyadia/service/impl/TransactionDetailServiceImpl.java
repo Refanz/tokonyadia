@@ -2,6 +2,7 @@ package com.refanzzzz.tokonyadia.service.impl;
 
 import com.refanzzzz.tokonyadia.dto.request.TransactionRequest;
 import com.refanzzzz.tokonyadia.dto.response.TransactionResponse;
+import com.refanzzzz.tokonyadia.entity.Transaction;
 import com.refanzzzz.tokonyadia.service.TransactionService;
 import org.springframework.data.domain.Page;
 
@@ -19,6 +20,11 @@ public class TransactionDetailServiceImpl implements TransactionService {
 
     @Override
     public TransactionResponse insert(TransactionRequest data) {
+        return null;
+    }
+
+    @Override
+    public Transaction getOne(String id) {
         return null;
     }
 

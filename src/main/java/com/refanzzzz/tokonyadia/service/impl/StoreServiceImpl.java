@@ -19,8 +19,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.List;
-import java.util.Optional;
 import java.util.function.Function;
 
 @Service
@@ -49,7 +47,7 @@ public class StoreServiceImpl implements StoreService {
 
     @Override
     public StoreResponse getById(String id) {
-        Store store = getStore(id);
+        Store store = getOne(id);
         return toStoreResponse(store);
     }
 
@@ -69,13 +67,13 @@ public class StoreServiceImpl implements StoreService {
 
     @Override
     public void remove(String id) {
-        Store store = getStore(id);
+        Store store = getOne(id);
         storeRepository.delete(store);
     }
 
     @Override
     public StoreResponse update(String id, StoreRequest data) {
-        Store store = getStore(id);
+        Store store = getOne(id);
 
         store.setName(data.getName());
         store.setNoSiup(data.getNoSiup());
@@ -86,9 +84,9 @@ public class StoreServiceImpl implements StoreService {
         return toStoreResponse(store);
     }
 
-    private Store getStore(String id) {
-        Optional<Store> storeOptional = storeRepository.findById(id);
-        return storeOptional.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Store is not found!"));
+    @Override
+    public Store getOne(String id) {
+        return storeRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Store is not found!"));
     }
 
     private StoreResponse toStoreResponse(Store store) {

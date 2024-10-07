@@ -13,4 +13,6 @@ import java.time.LocalDateTime;
 public class TransactionRequest extends SearchingPagingAndSortingRequest {
     private LocalDateTime transactionDate;
     private String customerId;
+    private LocalDateTime minTransactionDate;
+    private LocalDateTime maxTransactionDate;
 }

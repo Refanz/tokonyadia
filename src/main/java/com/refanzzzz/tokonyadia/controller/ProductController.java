@@ -14,8 +14,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import static com.refanzzzz.tokonyadia.constant.Constant.PRODUCT_API;
+
 @RestController
-@RequestMapping(Constant.PRODUCT_API)
+@RequestMapping(PRODUCT_API)
 @AllArgsConstructor
 public class ProductController implements Controller<CommonResponse<ProductResponse>, ProductRequest> {
 
