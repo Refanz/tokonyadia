@@ -1,21 +1,8 @@
 package com.refanzzzz.tokonyadia.service;
 
 import com.refanzzzz.tokonyadia.dto.request.ProductRequest;
-import com.refanzzzz.tokonyadia.entitiy.Product;
+import com.refanzzzz.tokonyadia.dto.response.ProductResponse;
 
-import java.util.List;
+public interface ProductService extends Service<ProductResponse, ProductRequest> {
 
-public interface ProductService {
-
-    List<Product> getAllProduct();
-
-    Product getProductById(String id);
-
-    Product addProduct(Product product);
-
-    Product addNewProduct(ProductRequest productRequest);
-
-    Product updateProduct(String id, Product product);
-
-    String deleteProductById(String id);
 }

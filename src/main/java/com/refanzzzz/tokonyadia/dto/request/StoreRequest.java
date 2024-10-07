@@ -11,7 +11,7 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @Getter
 @SuperBuilder
-public class StoreRequest extends SearchingPagingAndSortingRequest{
+public class StoreRequest extends SearchingPagingAndSortingRequest {
     private String name;
     private String noSiup;
     private String address;

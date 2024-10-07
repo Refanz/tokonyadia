@@ -1,7 +1,7 @@
 package com.refanzzzz.tokonyadia.specification;
 
 import com.refanzzzz.tokonyadia.dto.request.CustomerRequest;
-import com.refanzzzz.tokonyadia.entitiy.Customer;
+import com.refanzzzz.tokonyadia.entity.Customer;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;

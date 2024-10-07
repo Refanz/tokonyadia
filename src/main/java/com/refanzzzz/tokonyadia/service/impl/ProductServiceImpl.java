@@ -1,91 +1,118 @@
 package com.refanzzzz.tokonyadia.service.impl;
 
 import com.refanzzzz.tokonyadia.dto.request.ProductRequest;
-import com.refanzzzz.tokonyadia.entitiy.Product;
-import com.refanzzzz.tokonyadia.entitiy.Store;
+import com.refanzzzz.tokonyadia.dto.response.ProductResponse;
+import com.refanzzzz.tokonyadia.dto.response.StoreResponse;
+import com.refanzzzz.tokonyadia.entity.Product;
+import com.refanzzzz.tokonyadia.entity.Store;
 import com.refanzzzz.tokonyadia.repository.ProductRepository;
 import com.refanzzzz.tokonyadia.repository.StoreRepository;
 import com.refanzzzz.tokonyadia.service.ProductService;
+import com.refanzzzz.tokonyadia.service.StoreService;
+import com.refanzzzz.tokonyadia.specification.ProductSpecification;
+import com.refanzzzz.tokonyadia.util.SortUtil;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
-import java.util.List;
 import java.util.Optional;
+import java.util.function.Function;
 
 @Service
 @AllArgsConstructor
 public class ProductServiceImpl implements ProductService {
 
     private ProductRepository productRepository;
-    private StoreRepository storeRepository;
+    private StoreService storeService;
 
     @Override
-    public List<Product> getAllProduct() {
-        return productRepository.findAll();
+    public Page<ProductResponse> getAll(ProductRequest request) {
+        Sort sortBy = SortUtil.parseSort(request.getSortBy());
+        Pageable pageable = PageRequest.of(request.getPage(), request.getSize(), sortBy);
+
+        Specification<Product> specification = ProductSpecification.getProductSpecification(request);
+
+        Page<Product> productPage = productRepository.findAll(specification, pageable);
+        return productPage.map(new Function<Product, ProductResponse>() {
+            @Override
+            public ProductResponse apply(Product product) {
+                return toProductResponse(product);
+            }
+        });
     }
 
     @Override
-    public Product getProductById(String id) {
-        Optional<Product> productOptional = productRepository.findById(id);
-
-        if (productOptional.isPresent()) {
-            return productOptional.get();
-        }
-
-        throw new RuntimeException("Product tidak ada!");
+    public ProductResponse getById(String id) {
+        Product product = getProduct(id);
+        if (product == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Product is not found!");
+        return toProductResponse(product);
     }
 
     @Override
-    public Product addProduct(Product product) {
-        return productRepository.save(product);
+    public ProductResponse insert(ProductRequest data) {
+        StoreResponse storeResponse = storeService.getById(data.getStoreId());
+
+        Store store = Store.builder()
+                .id(storeResponse.getId())
+                .name(storeResponse.getName())
+                .noSiup(storeResponse.getNoSiup())
+                .phoneNumber(storeResponse.getPhoneNumber())
+                .address(storeResponse.getAddress())
+                .build();
+
+        Product product = Product.builder()
+                .name(data.getName())
+                .description(data.getDescription())
+                .stock(data.getStock())
+                .price(data.getPrice())
+                .store(store)
+                .build();
+
+        productRepository.saveAndFlush(product);
+
+        return toProductResponse(product);
     }
 
     @Override
-    public Product addNewProduct(ProductRequest productRequest) {
-        Optional<Store> optionalStore = storeRepository.findById(productRequest.getStoreId());
-
-        if (optionalStore.isPresent()) {
-            Store store = optionalStore.get();
-            Product newProduct = new Product(
-                    null,
-                    productRequest.getName(),
-                    productRequest.getDescription(),
-                    productRequest.getPrice(),
-                    productRequest.getStock(),
-                    store);
-
-            productRepository.save(newProduct);
-        }
-
-        throw new RuntimeException("Store tidak ada!");
+    public void remove(String id) {
+        Product product = getProduct(id);
+        if (product == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Product is not found!");
+        productRepository.deleteById(id);
     }
 
     @Override
-    public Product updateProduct(String id, Product product) {
-        Optional<Product> productOptional = productRepository.findById(id);
+    public ProductResponse update(String id, ProductRequest data) {
+        Product product = getProduct(id);
 
-        if (productOptional.isPresent()) {
-            Product updateProduct = productOptional.get();
-            updateProduct.setName(product.getName());
-            updateProduct.setStock(product.getStock());
-            updateProduct.setPrice(product.getPrice());
-            updateProduct.setDescription(product.getDescription());
+        if (product == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Product is not found!");
+        product.setName(data.getName());
+        product.setDescription(data.getDescription());
+        product.setStock(data.getStock());
+        product.setPrice(data.getPrice());
 
-            return productRepository.save(updateProduct);
-        }
+        productRepository.saveAndFlush(product);
 
-        throw new RuntimeException("Product tidak ada!");
+        return toProductResponse(product);
     }
 
-    @Override
-    public String deleteProductById(String id) {
-        Optional<Product> productOptional = productRepository.findById(id);
+    private ProductResponse toProductResponse(Product product) {
+        return ProductResponse.builder()
+                .id(product.getId())
+                .name(product.getName())
+                .description(product.getDescription())
+                .price(product.getPrice())
+                .stock(product.getStock())
+                .storeId(product.getStore().getId())
+                .build();
+    }
 
-        if (productOptional.isPresent()) {
-            productRepository.delete(productOptional.get());
-            return "Data product berhasil dihapus dengan id: " + id;
-        }
-
-        throw new RuntimeException("Product tidak ada!");
+    private Product getProduct(String id) {
+        return productRepository.findById(id).orElse(null);
     }
 }

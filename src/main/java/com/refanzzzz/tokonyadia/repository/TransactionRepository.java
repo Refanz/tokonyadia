@@ -1,6 +1,6 @@
 package com.refanzzzz.tokonyadia.repository;
 
-import com.refanzzzz.tokonyadia.entitiy.Transaction;
+import com.refanzzzz.tokonyadia.entity.Transaction;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

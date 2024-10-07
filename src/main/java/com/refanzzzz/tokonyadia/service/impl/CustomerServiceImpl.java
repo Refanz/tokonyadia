@@ -2,7 +2,7 @@ package com.refanzzzz.tokonyadia.service.impl;
 
 import com.refanzzzz.tokonyadia.dto.request.CustomerRequest;
 import com.refanzzzz.tokonyadia.dto.response.CustomerResponse;
-import com.refanzzzz.tokonyadia.entitiy.Customer;
+import com.refanzzzz.tokonyadia.entity.Customer;
 import com.refanzzzz.tokonyadia.repository.CustomerRepository;
 import com.refanzzzz.tokonyadia.service.CustomerService;
 import com.refanzzzz.tokonyadia.specification.CustomerSpecification;
@@ -31,13 +31,7 @@ public class CustomerServiceImpl implements CustomerService {
         Sort sortBy = SortUtil.parseSort(request.getSortBy());
         Pageable pageable = PageRequest.of(request.getPage(), request.getSize(), sortBy);
 
-        CustomerRequest customerRequest = CustomerRequest.builder()
-                .query(request.getQuery())
-                .page(request.getPage())
-                .size(request.getSize())
-                .build();
-
-        Specification<Customer> customerSpecification = CustomerSpecification.getCustomerSpecification(customerRequest);
+        Specification<Customer> customerSpecification = CustomerSpecification.getCustomerSpecification(request);
 
         Page<Customer> customerResponsePage = customerRepository.findAll(customerSpecification, pageable);
 
@@ -52,7 +46,6 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public CustomerResponse getById(String id) {
         Customer customer = getCustomer(id);
-        if (customer == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Customer is not found!");
 
         return CustomerResponse.builder()
                 .id(customer.getId())
@@ -73,22 +66,18 @@ public class CustomerServiceImpl implements CustomerService {
                 .build();
 
         customerRepository.saveAndFlush(customer);
-
         return toCustomerResponse(customer);
     }
 
     @Override
     public void remove(String id) {
         Customer customer = getCustomer(id);
-        if (customer == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Customer is not found!");
-
         customerRepository.delete(customer);
     }
 
     @Override
     public CustomerResponse update(String id, CustomerRequest data) {
         Customer customer = getCustomer(id);
-        if (customer == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Customer is not found!");
 
         customer.setName(data.getName());
         customer.setEmail(data.getEmail());
@@ -101,7 +90,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     private Customer getCustomer(String id) {
         Optional<Customer> customerOptional = customerRepository.findById(id);
-        return customerOptional.orElse(null);
+        return customerOptional.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Customer is not found!"));
     }
 
     private CustomerResponse toCustomerResponse(Customer customer) {

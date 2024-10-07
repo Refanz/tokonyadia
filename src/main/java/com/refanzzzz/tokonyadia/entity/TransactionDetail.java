@@ -1,4 +1,4 @@
-package com.refanzzzz.tokonyadia.entitiy;
+package com.refanzzzz.tokonyadia.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -7,30 +7,28 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "m_product")
+@Table(name = "t_transaction_detail")
 @Setter
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Product {
+public class TransactionDetail {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
-    @Column(name = "name", nullable = false)
-    private String name;
-
-    @Column(name = "description", nullable = false)
-    private String description;
+    @Column(name = "qty")
+    private Integer qty;
 
     @Column(name = "price", nullable = false, columnDefinition = "bigint check(price > 0)")
     private Long price;
 
-    @Column(name = "stock", nullable = false)
-    private Integer stock;
+    @ManyToOne
+    @JoinColumn(name = "transaction_id")
+    private Transaction transaction;
 
     @ManyToOne
-    @JoinColumn(name = "store_id")
-    private Store store;
+    @JoinColumn(name = "product_id")
+    private Product product;
 }

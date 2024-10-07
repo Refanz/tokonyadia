@@ -1,47 +1,74 @@
 package com.refanzzzz.tokonyadia.controller;
 
+import com.refanzzzz.tokonyadia.constant.Constant;
 import com.refanzzzz.tokonyadia.dto.request.ProductRequest;
-import com.refanzzzz.tokonyadia.entitiy.Product;
+import com.refanzzzz.tokonyadia.dto.response.CommonResponse;
+import com.refanzzzz.tokonyadia.dto.response.ProductResponse;
+import com.refanzzzz.tokonyadia.dto.response.StoreResponse;
 import com.refanzzzz.tokonyadia.service.ProductService;
+import com.refanzzzz.tokonyadia.service.StoreService;
+import com.refanzzzz.tokonyadia.util.ResponseUtil;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
-@RequestMapping("/api/product")
+@RequestMapping(Constant.PRODUCT_API)
 @AllArgsConstructor
-public class ProductController {
+public class ProductController implements Controller<CommonResponse<ProductResponse>, ProductRequest> {
 
     private ProductService productService;
+    private StoreService storeService;
 
     @GetMapping
-    public List<Product> getAllProduct() {
-        return productService.getAllProduct();
+    @Override
+    public ResponseEntity<CommonResponse<ProductResponse>> getAll(
+            @RequestParam(name = "q", required = false) String query,
+            @RequestParam(name = "page", required = false, defaultValue = "1") Integer page,
+            @RequestParam(name = "size", required = false, defaultValue = "10") Integer size,
+            @RequestParam(name = "sortBy", required = false) String sort) {
+
+        ProductRequest productRequest = ProductRequest.builder()
+                .query(query)
+                .page(page)
+                .size(size)
+                .sortBy(sort)
+                .build();
+
+        Page<ProductResponse> productResponses = productService.getAll(productRequest);
+        return ResponseUtil.createResponseWithPaging(HttpStatus.OK, "Successfully get all product", productResponses);
     }
 
     @GetMapping("/{id}")
-    public Product getProductById(@PathVariable String id) {
-        return productService.getProductById(id);
+    @Override
+    public ResponseEntity<CommonResponse<ProductResponse>> getById(@PathVariable String id) {
+        ProductResponse productResponse = productService.getById(id);
+        return ResponseUtil.createResponse(HttpStatus.OK, "Successfully get product with id: " + id, productResponse);
     }
-
-    /* @PostMapping
-    public Product addProduct(@RequestBody Product product) {
-        return productService.addProduct(product);
-    } */
 
     @PostMapping
-    public Product addNewProduct(@RequestBody ProductRequest productRequest) {
-        return productService.addNewProduct(productRequest);
-    }
+    @Override
+    public ResponseEntity<CommonResponse<ProductResponse>> insert(@RequestBody ProductRequest request) {
+        StoreResponse storeResponse = storeService.getById(request.getStoreId());
+        request.setStoreId(storeResponse.getId());
+        ProductResponse productResponse = productService.insert(request);
 
-    @PutMapping("/{id}")
-    public Product updateProduct(@PathVariable String id, @RequestBody Product product) {
-        return productService.updateProduct(id, product);
+        return ResponseUtil.createResponse(HttpStatus.CREATED, "Successfully create new product", productResponse);
     }
 
     @DeleteMapping("/{id}")
-    public String deleteProductById(@PathVariable String id) {
-        return productService.deleteProductById(id);
+    @Override
+    public ResponseEntity<CommonResponse<ProductResponse>> remove(@PathVariable String id) {
+        productService.remove(id);
+        return ResponseUtil.createResponse(HttpStatus.OK, "Successfully delete product with id: ", null);
+    }
+
+    @PutMapping("/{id}")
+    @Override
+    public ResponseEntity<CommonResponse<ProductResponse>> update(@PathVariable String id, @RequestBody ProductRequest request) {
+        ProductResponse productResponse = productService.update(id, request);
+        return ResponseUtil.createResponse(HttpStatus.OK, "Successfully update product with id: " + id, productResponse);
     }
 }

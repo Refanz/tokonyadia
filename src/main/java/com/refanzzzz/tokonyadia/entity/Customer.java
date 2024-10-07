@@ -1,4 +1,4 @@
-package com.refanzzzz.tokonyadia.entitiy;
+package com.refanzzzz.tokonyadia.entity;
 
 import jakarta.persistence.*;
 import lombok.*;

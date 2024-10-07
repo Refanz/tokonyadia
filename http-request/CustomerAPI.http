@@ -1,0 +1,19 @@
+### GET All Customer
+GET {{localhost}}/customer
+
+### GET Customer By ID
+GET localhost:8081/api/customer/ffb57840-7b66-4ec4-925b-27e4fdc3d0c6
+
+### POST Customer
+POST localhost:8081/api/customer
+Content-Type: application/json
+
+{
+  "address": "Jalan",
+  "name":"Ayu",
+  "email": "ayu@gmail.com",
+  "phoneNumber": "0872622"
+}
+
+### GET Customer
+GET localhost:8081/api/customer?sort=-name

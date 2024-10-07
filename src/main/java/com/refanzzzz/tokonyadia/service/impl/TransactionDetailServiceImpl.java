@@ -24,7 +24,6 @@ public class TransactionDetailServiceImpl implements TransactionService {
 
     @Override
     public void remove(String id) {
-
     }
 
     @Override

@@ -1,0 +1,30 @@
+### GET Store
+GET localhost:8081/api/store
+
+### POST Store
+POST {{localhost}}/store
+Content-Type: application/json
+
+{
+  "noSiup": "038383s882",
+  "name": "Toko Madara",
+  "address": "Jalan Hokage",
+  "phoneNumber": "08838383"
+}
+
+### GET Store by ID
+GET {{localhost}}/store/d648fdbb-b7e0-40af-9e72-0fdd159d545e
+
+### PUT Store
+PUT {{localhost}}/store/d648fdbb-b7e0-40af-9e72-0fdd159d545e
+Content-Type: application/json
+
+{
+  "noSiup": "038383s8825",
+  "name": "Toko Madara 2",
+  "address": "Jalan Hokage 10",
+  "phoneNumber": "088383835"
+}
+
+### DELETE Store
+DELETE {{localhost}}/store/d648fdbb-b7e0-40af-9e72-0fdd159d545e

@@ -1,6 +1,6 @@
 package com.refanzzzz.tokonyadia.dto.response;
 
-import com.refanzzzz.tokonyadia.entitiy.Customer;
+import com.refanzzzz.tokonyadia.entity.Customer;
 import lombok.*;
 
 import java.time.LocalDateTime;

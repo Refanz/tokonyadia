@@ -2,7 +2,7 @@ package com.refanzzzz.tokonyadia.service.impl;
 
 import com.refanzzzz.tokonyadia.dto.request.TransactionRequest;
 import com.refanzzzz.tokonyadia.dto.response.TransactionResponse;
-import com.refanzzzz.tokonyadia.entitiy.Transaction;
+import com.refanzzzz.tokonyadia.entity.Transaction;
 import com.refanzzzz.tokonyadia.repository.TransactionRepository;
 import com.refanzzzz.tokonyadia.service.TransactionService;
 import lombok.AllArgsConstructor;
@@ -59,6 +59,7 @@ public class TransactionServiceImpl implements TransactionService {
         if (transaction == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Transaction is not found");
 
         transactionRepository.delete(transaction);
+
     }
 
     @Override

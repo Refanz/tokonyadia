@@ -1,7 +1,9 @@
-package com.refanzzzz.tokonyadia.entitiy;
+package com.refanzzzz.tokonyadia.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.List;
 
 @Entity
 @Table(name = "m_store")
@@ -28,4 +30,6 @@ public class Store {
     @Column(name = "address", nullable = false)
     private String address;
 
+    @OneToMany(targetEntity = Product.class, mappedBy = "store", fetch = FetchType.LAZY)
+    private List<Product> productList;
 }

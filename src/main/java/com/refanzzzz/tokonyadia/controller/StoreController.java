@@ -9,10 +9,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/store")
@@ -40,23 +37,31 @@ public class StoreController implements Controller<CommonResponse<StoreResponse>
         return ResponseUtil.createResponseWithPaging(HttpStatus.OK, "Successfully get all store", storeResponsePage);
     }
 
+    @GetMapping("/{id}")
     @Override
-    public ResponseEntity<CommonResponse<StoreResponse>> getById(String id) {
-        return null;
+    public ResponseEntity<CommonResponse<StoreResponse>> getById(@PathVariable String id) {
+        StoreResponse storeResponse = storeService.getById(id);
+        return ResponseUtil.createResponse(HttpStatus.OK, "Successfully get store by id", storeResponse);
     }
 
+    @PostMapping
     @Override
-    public ResponseEntity<CommonResponse<StoreResponse>> insert(StoreRequest request) {
-        return null;
+    public ResponseEntity<CommonResponse<StoreResponse>> insert(@RequestBody StoreRequest request) {
+        StoreResponse storeResponse = storeService.insert(request);
+        return ResponseUtil.createResponse(HttpStatus.CREATED, "Successfully create store", storeResponse);
     }
 
+    @DeleteMapping("/{id}")
     @Override
-    public ResponseEntity<CommonResponse<StoreResponse>> remove(String id) {
-        return null;
+    public ResponseEntity<CommonResponse<StoreResponse>> remove(@PathVariable String id) {
+        storeService.remove(id);
+        return ResponseUtil.createResponse(HttpStatus.OK, "Successfully delete store with id: " + id, null);
     }
 
+    @PutMapping("/{id}")
     @Override
-    public ResponseEntity<CommonResponse<StoreResponse>> update(String id, StoreRequest request) {
-        return null;
+    public ResponseEntity<CommonResponse<StoreResponse>> update(@PathVariable String id, @RequestBody StoreRequest request) {
+        StoreResponse storeResponse = storeService.update(id, request);
+        return ResponseUtil.createResponse(HttpStatus.OK, "Successfully update store", storeResponse);
     }
 }

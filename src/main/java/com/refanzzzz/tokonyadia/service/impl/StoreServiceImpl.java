@@ -1,8 +1,10 @@
 package com.refanzzzz.tokonyadia.service.impl;
 
 import com.refanzzzz.tokonyadia.dto.request.StoreRequest;
+import com.refanzzzz.tokonyadia.dto.response.ProductResponse;
 import com.refanzzzz.tokonyadia.dto.response.StoreResponse;
-import com.refanzzzz.tokonyadia.entitiy.Store;
+import com.refanzzzz.tokonyadia.entity.Product;
+import com.refanzzzz.tokonyadia.entity.Store;
 import com.refanzzzz.tokonyadia.repository.StoreRepository;
 import com.refanzzzz.tokonyadia.service.StoreService;
 import com.refanzzzz.tokonyadia.specification.StoreSpecification;
@@ -17,6 +19,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 
@@ -39,7 +42,7 @@ public class StoreServiceImpl implements StoreService {
         return storePage.map(new Function<Store, StoreResponse>() {
             @Override
             public StoreResponse apply(Store store) {
-                return toStoreResponse(store);
+                return toStoreProductResponse(store);
             }
         });
     }
@@ -47,7 +50,6 @@ public class StoreServiceImpl implements StoreService {
     @Override
     public StoreResponse getById(String id) {
         Store store = getStore(id);
-        if (store == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Store is not found!");
         return toStoreResponse(store);
     }
 
@@ -68,14 +70,12 @@ public class StoreServiceImpl implements StoreService {
     @Override
     public void remove(String id) {
         Store store = getStore(id);
-        if (store == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Store is not found!");
         storeRepository.delete(store);
     }
 
     @Override
     public StoreResponse update(String id, StoreRequest data) {
         Store store = getStore(id);
-        if (store == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Store is not found!");
 
         store.setName(data.getName());
         store.setNoSiup(data.getNoSiup());
@@ -88,7 +88,7 @@ public class StoreServiceImpl implements StoreService {
 
     private Store getStore(String id) {
         Optional<Store> storeOptional = storeRepository.findById(id);
-        return storeOptional.orElse(null);
+        return storeOptional.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Store is not found!"));
     }
 
     private StoreResponse toStoreResponse(Store store) {
@@ -96,6 +96,24 @@ public class StoreServiceImpl implements StoreService {
                 .id(store.getId())
                 .name(store.getName())
                 .address(store.getAddress())
+                .noSiup(store.getNoSiup())
+                .phoneNumber(store.getPhoneNumber())
+                .build();
+    }
+
+    private StoreResponse toStoreProductResponse(Store store) {
+        return StoreResponse.builder()
+                .id(store.getId())
+                .name(store.getName())
+                .address(store.getAddress())
+                .products(store.getProductList().stream().map(new Function<Product, ProductResponse>() {
+                    @Override
+                    public ProductResponse apply(Product product) {
+                        return ProductResponse.builder()
+                                .name(product.getName())
+                                .build();
+                    }
+                }).toList())
                 .noSiup(store.getNoSiup())
                 .phoneNumber(store.getPhoneNumber())
                 .build();

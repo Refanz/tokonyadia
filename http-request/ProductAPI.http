@@ -1,0 +1,32 @@
+### GET All Product
+GET localhost:8081/api/product
+
+### GET Product
+GET localhost:8081/api/product?sortBy=name
+
+### POST Product
+POST localhost:8081/api/product
+Content-Type: application/json
+
+{
+  "name": "Chiki Choco",
+  "description": "Jajanan chiki bola bola dengan rasa keju",
+  "price": 3000,
+  "stock": 20,
+  "storeId": "d709a133-87a8-4085-824c-3f8e3cf2005e"
+}
+
+### DELETE Product
+DELETE localhost:8081/api/product/5ef4e978-a6ad-47c4-ab65-fc51f394bd69
+
+### PUT Product
+PUT {{localhost}}product/10bb30e8-d022-4f90-a62b-eead157cf4fa
+Content-Type: application/json
+
+{
+  "name": "Marimbak Jambu Biji",
+  "stock": 20,
+  "price": 3000,
+  "description": "Minuman serbuk rasa jambu biji",
+  "storeId": "d709a133-87a8-4085-824c-3f8e3cf2005e"
+}
