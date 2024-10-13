@@ -7,7 +7,8 @@ public class Constant {
     public static final String STORE_API = "api/store";
     public static final String TRANSACTION_DETAIL_API = "api/transaction-detail";
     public static final String USER_ACCOUNT_API = "api/user-account";
-    public static final String AUTH_API = "api/auth";
+    public static final String AUTH_API = "/api/auth";
 
     public static final String LOGIN_API = AUTH_API + "/login";
+    public static final String ERROR_USERNAME_DUPLICATE = "Username has been registered!";
 }

@@ -1,5 +1,6 @@
 ### GET All Customer
 GET {{localhost}}/customer
+Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJ0b2tvbnlhZGlhIiwiaWF0IjoxNzI4ODM3NjYzLCJleHAiOjE3Mjg4Mzc5NjMsInN1YiI6bnVsbCwicm9sZSI6IkFkbWluIn0.upcfewtJrIBpMgzBFosMHInI4ZhfzhkAUqD73L18GYM"
 
 ### GET Customer By ID
 GET localhost:8081/api/customer/ffb57840-7b66-4ec4-925b-27e4fdc3d0c6

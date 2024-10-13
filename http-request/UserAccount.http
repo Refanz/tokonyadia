@@ -1,0 +1,9 @@
+### CREATE NEW USER
+POST {{localhost}}/user-account
+Content-Type: application/json
+
+{
+  "username": "ayu",
+  "password": "123",
+  "role": "Admin"
+}
