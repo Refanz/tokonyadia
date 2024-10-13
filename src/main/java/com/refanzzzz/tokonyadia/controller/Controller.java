@@ -8,7 +8,7 @@ public interface Controller<T, U> {
 
     ResponseEntity<T> getById(String id);
 
-    ResponseEntity<T> insert(U request);
+    ResponseEntity<T> create(U request);
 
     ResponseEntity<T> remove(String id);
 

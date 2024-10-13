@@ -29,20 +29,14 @@ public class StoreServiceImpl implements StoreService {
 
     @Override
     public Page<StoreResponse> getAll(StoreRequest request) {
+
         Specification<Store> specification = StoreSpecification.getStoreSpecification(request);
-
         Sort sortBy = SortUtil.parseSort(request.getSortBy());
-
         Pageable pageable = PageRequest.of(request.getPage(), request.getSize(), sortBy);
 
         Page<Store> storePage = storeRepository.findAll(specification, pageable);
 
-        return storePage.map(new Function<Store, StoreResponse>() {
-            @Override
-            public StoreResponse apply(Store store) {
-                return toStoreProductResponse(store);
-            }
-        });
+        return storePage.map(this::toStoreProductResponse);
     }
 
     @Override
@@ -52,7 +46,7 @@ public class StoreServiceImpl implements StoreService {
     }
 
     @Override
-    public StoreResponse insert(StoreRequest data) {
+    public StoreResponse create(StoreRequest data) {
         Store store = Store.builder()
                 .name(data.getName())
                 .noSiup(data.getNoSiup())

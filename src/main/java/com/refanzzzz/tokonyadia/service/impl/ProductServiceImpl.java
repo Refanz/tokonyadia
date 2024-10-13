@@ -31,18 +31,14 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Page<ProductResponse> getAll(ProductRequest request) {
+
         Sort sortBy = SortUtil.parseSort(request.getSortBy());
         Pageable pageable = PageRequest.of(request.getPage(), request.getSize(), sortBy);
-
         Specification<Product> specification = ProductSpecification.getProductSpecification(request);
 
         Page<Product> productPage = productRepository.findAll(specification, pageable);
-        return productPage.map(new Function<Product, ProductResponse>() {
-            @Override
-            public ProductResponse apply(Product product) {
-                return toProductResponse(product);
-            }
-        });
+
+        return productPage.map(this::toProductResponse);
     }
 
     @Override
@@ -52,7 +48,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductResponse insert(ProductRequest data) {
+    public ProductResponse create(ProductRequest data) {
         StoreResponse storeResponse = storeService.getById(data.getStoreId());
 
         Store store = Store.builder()

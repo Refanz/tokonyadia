@@ -48,8 +48,8 @@ public class StoreController implements Controller<CommonResponse<StoreResponse>
 
     @PostMapping
     @Override
-    public ResponseEntity<CommonResponse<StoreResponse>> insert(@RequestBody StoreRequest request) {
-        StoreResponse storeResponse = storeService.insert(request);
+    public ResponseEntity<CommonResponse<StoreResponse>> create(@RequestBody StoreRequest request) {
+        StoreResponse storeResponse = storeService.create(request);
         return ResponseUtil.createResponse(HttpStatus.CREATED, "Successfully create store", storeResponse);
     }
 

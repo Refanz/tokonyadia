@@ -49,8 +49,8 @@ public class CustomerController implements Controller<CommonResponse<CustomerRes
 
     @PostMapping
     @Override
-    public ResponseEntity<CommonResponse<CustomerResponse>> insert(@RequestBody CustomerRequest request) {
-        CustomerResponse customerResponse = customerService.insert(request);
+    public ResponseEntity<CommonResponse<CustomerResponse>> create(@RequestBody CustomerRequest request) {
+        CustomerResponse customerResponse = customerService.create(request);
         return ResponseUtil.createResponse(HttpStatus.CREATED, "Successfuly create new customer", customerResponse);
     }
 

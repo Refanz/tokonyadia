@@ -27,4 +27,7 @@ public class Customer {
 
     @Column(name = "email", nullable = false, length = 100, unique = true)
     private String email;
+
+    @OneToOne
+    private UserAccount userAccount;
 }

@@ -49,8 +49,8 @@ public class TransactionDetailController implements Controller<CommonResponse<Tr
 
     @PostMapping
     @Override
-    public ResponseEntity<CommonResponse<TransactionDetailResponse>> insert(@RequestBody TransactionDetailRequest request) {
-        TransactionDetailResponse transactionDetailResponse = transactionDetailService.insert(request);
+    public ResponseEntity<CommonResponse<TransactionDetailResponse>> create(@RequestBody TransactionDetailRequest request) {
+        TransactionDetailResponse transactionDetailResponse = transactionDetailService.create(request);
         return ResponseUtil.createResponse(HttpStatus.CREATED, "Successfully create transaction detail", transactionDetailResponse);
     }
 

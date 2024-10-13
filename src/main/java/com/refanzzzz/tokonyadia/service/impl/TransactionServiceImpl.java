@@ -31,20 +31,14 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     public Page<TransactionResponse> getAll(TransactionRequest request) {
+
         Specification<Transaction> specification = TransactionSpecification.getTransactionSpecification(request);
-
         Sort sortBy = SortUtil.parseSort(request.getSortBy());
-
         Pageable pageable = PageRequest.of(request.getPage(), request.getSize(), sortBy);
 
         Page<Transaction> transactionPage = transactionRepository.findAll(specification, pageable);
 
-        return transactionPage.map(new Function<Transaction, TransactionResponse>() {
-            @Override
-            public TransactionResponse apply(Transaction transaction) {
-                return toTransactionResponse(transaction);
-            }
-        });
+        return transactionPage.map(this::toTransactionResponse);
     }
 
     @Override
@@ -54,7 +48,7 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
-    public TransactionResponse insert(TransactionRequest data) {
+    public TransactionResponse create(TransactionRequest data) {
         Customer customer = customerService.getOne(data.getCustomerId());
         Transaction transaction = Transaction.builder()
                 .transactionDate(data.getTransactionDate())

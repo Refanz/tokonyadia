@@ -34,15 +34,9 @@ public class TransactionDetailServiceImpl implements TransactionDetailService {
 
         Sort sortBy = SortUtil.parseSort(request.getSortBy());
         Pageable pageable = PageRequest.of(request.getPage(), request.getSize(), sortBy);
-
         Page<TransactionDetail> transactionDetails = transactionDetailRepository.findAll(pageable);
 
-        return transactionDetails.map(new Function<TransactionDetail, TransactionDetailResponse>() {
-            @Override
-            public TransactionDetailResponse apply(TransactionDetail transactionDetail) {
-                return toTransactionDetailResponse(transactionDetail);
-            }
-        });
+        return transactionDetails.map(this::toTransactionDetailResponse);
     }
 
     @Override
@@ -52,7 +46,7 @@ public class TransactionDetailServiceImpl implements TransactionDetailService {
     }
 
     @Override
-    public TransactionDetailResponse insert(TransactionDetailRequest data) {
+    public TransactionDetailResponse create(TransactionDetailRequest data) {
 
         Transaction transaction = transactionService.getOne(data.getTransactionId());
         Product product = productService.getOne(data.getProductId());

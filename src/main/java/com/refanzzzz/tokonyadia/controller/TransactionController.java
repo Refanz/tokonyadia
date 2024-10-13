@@ -1,6 +1,5 @@
 package com.refanzzzz.tokonyadia.controller;
 
-import com.refanzzzz.tokonyadia.constant.Constant;
 import com.refanzzzz.tokonyadia.dto.request.TransactionRequest;
 import com.refanzzzz.tokonyadia.dto.response.CommonResponse;
 import com.refanzzzz.tokonyadia.dto.response.TransactionResponse;
@@ -50,8 +49,8 @@ public class TransactionController implements Controller<CommonResponse<Transact
 
     @PostMapping
     @Override
-    public ResponseEntity<CommonResponse<TransactionResponse>> insert(@RequestBody TransactionRequest request) {
-        TransactionResponse transactionResponse = transactionService.insert(request);
+    public ResponseEntity<CommonResponse<TransactionResponse>> create(@RequestBody TransactionRequest request) {
+        TransactionResponse transactionResponse = transactionService.create(request);
         return ResponseUtil.createResponse(HttpStatus.CREATED, "Successfully create transaction", transactionResponse);
     }
 

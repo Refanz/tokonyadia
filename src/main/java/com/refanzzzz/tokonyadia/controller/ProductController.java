@@ -1,6 +1,5 @@
 package com.refanzzzz.tokonyadia.controller;
 
-import com.refanzzzz.tokonyadia.constant.Constant;
 import com.refanzzzz.tokonyadia.dto.request.ProductRequest;
 import com.refanzzzz.tokonyadia.dto.response.CommonResponse;
 import com.refanzzzz.tokonyadia.dto.response.ProductResponse;
@@ -52,10 +51,10 @@ public class ProductController implements Controller<CommonResponse<ProductRespo
 
     @PostMapping
     @Override
-    public ResponseEntity<CommonResponse<ProductResponse>> insert(@RequestBody ProductRequest request) {
+    public ResponseEntity<CommonResponse<ProductResponse>> create(@RequestBody ProductRequest request) {
         StoreResponse storeResponse = storeService.getById(request.getStoreId());
         request.setStoreId(storeResponse.getId());
-        ProductResponse productResponse = productService.insert(request);
+        ProductResponse productResponse = productService.create(request);
 
         return ResponseUtil.createResponse(HttpStatus.CREATED, "Successfully create new product", productResponse);
     }

@@ -27,19 +27,14 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public Page<CustomerResponse> getAll(CustomerRequest request) {
+
         Sort sortBy = SortUtil.parseSort(request.getSortBy());
         Pageable pageable = PageRequest.of(request.getPage(), request.getSize(), sortBy);
-
         Specification<Customer> customerSpecification = CustomerSpecification.getCustomerSpecification(request);
 
         Page<Customer> customerResponsePage = customerRepository.findAll(customerSpecification, pageable);
 
-        return customerResponsePage.map(new Function<Customer, CustomerResponse>() {
-            @Override
-            public CustomerResponse apply(Customer customer) {
-                return toCustomerResponse(customer);
-            }
-        });
+        return customerResponsePage.map(this::toCustomerResponse);
     }
 
     @Override
@@ -56,7 +51,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public CustomerResponse insert(CustomerRequest data) {
+    public CustomerResponse create(CustomerRequest data) {
         Customer customer = Customer.builder()
                 .name(data.getName())
                 .email(data.getEmail())
