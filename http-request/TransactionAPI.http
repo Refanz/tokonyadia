@@ -1,0 +1,22 @@
+### GET All Transaction
+GET {{localhost}}/transaction
+
+### GET Transaction By ID
+GET {{localhost}}/transaction/f91b494d-d2fe-476b-8e18-0a62b9077374
+
+### POST Transaction
+POST {{localhost}}/transaction
+Content-Type: application/json
+
+{
+  "customerId": "ffb57840-7b66-4ec4-925b-27e4fdc3d0c6"
+}
+
+### PUT Transaction
+PUT {{localhost}}/transaction/f91b494d-d2fe-476b-8e18-0a62b9077374
+Content-Type: application/json
+
+{
+  "transactionDate": ""
+}
+

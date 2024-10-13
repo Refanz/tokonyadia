@@ -1,0 +1,30 @@
+### GET All Transaction Detail
+GET {{localhost}}/transaction-detail
+
+### GET Transaction Detail By ID
+GET {{localhost}}/transaction-detail/22ddf1d2-8cd0-47a8-95d5-b9d62b21b50c
+
+### POST Transaction Detail
+POST {{localhost}}/transaction-detail
+Content-Type: application/json
+
+{
+  "price": 10000,
+  "qty": 5,
+  "productId": "a75c937f-8990-4d27-8715-ae4e92447540",
+  "transactionId": "f91b494d-d2fe-476b-8e18-0a62b9077374"
+}
+
+### PUT Transaction Detail
+PUT {{localhost}}/transaction-detail/c000df5d-e299-4fdc-8309-1581221e2d47
+Content-Type: application/json
+
+{
+  "price": 20000,
+  "qty": 5,
+  "productId": "a75c937f-8990-4d27-8715-ae4e92447540",
+  "transactionId": "f91b494d-d2fe-476b-8e18-0a62b9077374"
+}
+
+### DELETE Transaction Detail
+DELETE {{localhost}}/transaction-detail/c000df5d-e299-4fdc-8309-1581221e2d47
