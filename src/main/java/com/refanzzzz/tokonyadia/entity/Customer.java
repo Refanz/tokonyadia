@@ -29,5 +29,6 @@ public class Customer {
     private String email;
 
     @OneToOne
+    @JoinColumn(name = "user_account_id")
     private UserAccount userAccount;
 }

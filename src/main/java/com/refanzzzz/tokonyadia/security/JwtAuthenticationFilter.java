@@ -34,7 +34,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             @NonNull HttpServletResponse response,
             @NonNull FilterChain filterChain) throws ServletException, IOException {
         try {
-            String bearerToken = response.getHeader(HttpHeaders.AUTHORIZATION);
+            String bearerToken = request.getHeader(HttpHeaders.AUTHORIZATION);
             String token = JwtUtil.parseJwtToken(bearerToken);
 
             if (token != null) {
@@ -53,7 +53,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             }
 
         } catch (Exception e) {
-            log.error("Cannot set user authentication: {}", e.getMessage());
+//            log.error("Cannot set user authentication: {}", e.getMessage());
         }
 
         filterChain.doFilter(request, response);

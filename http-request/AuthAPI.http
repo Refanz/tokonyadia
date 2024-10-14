@@ -1,8 +1,8 @@
 ### Login
-POST {{localhost}}auth/login
+POST {{localhost}}/auth
 Content-Type: application/json
 
 {
-  "username": "refanzzzz",
+  "username": "refans",
   "password": "123"
 }
