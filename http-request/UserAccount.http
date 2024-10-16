@@ -3,7 +3,7 @@ POST {{localhost}}/user-account
 Content-Type: application/json
 
 {
-  "username": "refans",
+  "username": "refandas",
   "password": "123",
-  "role": "Admin"
+  "role": "Super Admin"
 }

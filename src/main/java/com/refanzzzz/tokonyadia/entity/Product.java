@@ -2,6 +2,7 @@ package com.refanzzzz.tokonyadia.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 @Entity
 @Table(name = "m_product")
@@ -9,12 +10,8 @@ import lombok.*;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-public class Product {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private String id;
+@SuperBuilder
+public class Product extends BaseEntity {
 
     @Column(name = "name", nullable = false)
     private String name;

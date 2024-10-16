@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import static com.refanzzzz.tokonyadia.constant.Constant.CUSTOMER_API;
@@ -20,6 +21,8 @@ public class CustomerController implements Controller<CommonResponse<CustomerRes
 
     private CustomerService customerService;
 
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping
     @Override
     public ResponseEntity<CommonResponse<CustomerResponse>> getAll(

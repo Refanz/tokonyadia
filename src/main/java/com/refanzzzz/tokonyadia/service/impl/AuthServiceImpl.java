@@ -20,21 +20,17 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public LoginResponse login(LoginRequest loginRequest) {
-        try {
-            Authentication authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
 
-            UserAccount userAccount = (UserAccount) authentication.getPrincipal();
+        UserAccount userAccount = (UserAccount) authentication.getPrincipal();
 
-            String accessToken = jwtService.generateAccessToken(userAccount);
+        String accessToken = jwtService.generateAccessToken(userAccount);
 
-            return LoginResponse.builder()
-                    .accessToken(accessToken)
-                    .role(userAccount.getRole().getDescription())
-                    .build();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            return null;
-        }
+        return LoginResponse.builder()
+                .accessToken(accessToken)
+                .role(userAccount.getRole().getDescription())
+                .build();
+
     }
 }

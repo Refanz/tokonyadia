@@ -2,6 +2,7 @@ package com.refanzzzz.tokonyadia.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 @Entity
 @Table(name = "t_transaction_detail")
@@ -9,12 +10,8 @@ import lombok.*;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-public class TransactionDetail {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private String id;
+@SuperBuilder
+public class TransactionDetail extends BaseEntity {
 
     @Column(name = "qty")
     private Integer qty;
