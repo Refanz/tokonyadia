@@ -2,6 +2,7 @@ package com.refanzzzz.tokonyadia.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 @Entity
 @Table(name = "m_customer")
@@ -9,12 +10,8 @@ import lombok.*;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-public class Customer {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private String id;
+@SuperBuilder
+public class Customer extends BaseEntity {
 
     @Column(name = "name", nullable = false)
     private String name;
@@ -29,5 +26,6 @@ public class Customer {
     private String email;
 
     @OneToOne
+    @JoinColumn(name = "user_account_id")
     private UserAccount userAccount;
 }

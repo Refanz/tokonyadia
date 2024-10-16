@@ -2,6 +2,7 @@ package com.refanzzzz.tokonyadia.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.util.List;
 
@@ -11,12 +12,8 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-public class Store {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private String id;
+@SuperBuilder
+public class Store extends BaseEntity {
 
     @Column(name = "no_siup", nullable = false, length = 20, unique = true)
     private String noSiup;

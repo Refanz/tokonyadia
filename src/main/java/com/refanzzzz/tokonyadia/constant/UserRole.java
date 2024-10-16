@@ -8,7 +8,7 @@ public enum UserRole {
     ROLE_SUPER_ADMIN("Super Admin"),
     ROLE_CUSTOMER("Customer");
 
-    private String description;
+    private final String description;
 
     UserRole(String description) {
         this.description = description;

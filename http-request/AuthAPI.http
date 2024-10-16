@@ -1,0 +1,8 @@
+### Login
+POST {{localhost}}/auth/login
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "password": "123"
+}
