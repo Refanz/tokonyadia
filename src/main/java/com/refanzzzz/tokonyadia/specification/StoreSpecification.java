@@ -13,18 +13,15 @@ import java.util.List;
 
 public class StoreSpecification {
     public static Specification<Store> getStoreSpecification(StoreRequest request) {
-        return new Specification<Store>() {
-            @Override
-            public Predicate toPredicate(Root<Store> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
-                List<Predicate> predicates = new ArrayList<>();
+        return (root, query, criteriaBuilder) -> {
+            List<Predicate> predicates = new ArrayList<>();
 
-                if (request.getQuery() != null) {
-                    Predicate predicate = criteriaBuilder.like(root.get("name"), request.getQuery() + "%");
-                    predicates.add(predicate);
-                }
-
-                return query.where(predicates.toArray(new Predicate[]{})).getRestriction();
+            if (request.getQuery() != null) {
+                Predicate predicate = criteriaBuilder.like(root.get("name"), request.getQuery() + "%");
+                predicates.add(predicate);
             }
+
+            return query.where(predicates.toArray(new Predicate[]{})).getRestriction();
         };
     }
 }

@@ -13,19 +13,16 @@ import java.util.List;
 
 public class CustomerSpecification {
     public static Specification<Customer> getCustomerSpecification(CustomerRequest request) {
-        return new Specification<Customer>() {
-            @Override
-            public Predicate toPredicate(Root<Customer> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
+        return (root, query, criteriaBuilder) -> {
 
-                List<Predicate> predicates = new ArrayList<>();
+            List<Predicate> predicates = new ArrayList<>();
 
-                if (request.getQuery() != null) {
-                    Predicate predicate = criteriaBuilder.like(root.get("name"), request.getQuery() + "%");
-                    predicates.add(predicate);
-                }
-
-                return query.where(predicates.toArray(new Predicate[]{})).getRestriction();
+            if (request.getQuery() != null) {
+                Predicate predicate = criteriaBuilder.like(root.get("name"), request.getQuery() + "%");
+                predicates.add(predicate);
             }
+
+            return query.where(predicates.toArray(new Predicate[]{})).getRestriction();
         };
     }
 }
