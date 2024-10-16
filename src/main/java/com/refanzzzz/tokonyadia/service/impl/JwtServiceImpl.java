@@ -33,7 +33,7 @@ public class JwtServiceImpl implements JwtService {
 
     @Override
     public String generateAccessToken(UserAccount userAccount) {
-//        log.info("Generating JWT Token for User: {}", userAccount.getId());
+        log.info("Generating JWT Token for User: {}", userAccount.getId());
 
         try {
             Algorithm algorithm = Algorithm.HMAC256(JWT_SECRET_KEY.getBytes(StandardCharsets.UTF_8));
@@ -52,7 +52,7 @@ public class JwtServiceImpl implements JwtService {
 
     @Override
     public String getUserId(String token) {
-//        log.info("Extract JWT Token - {}", System.currentTimeMillis());
+        log.info("Extract JWT Token - {}", System.currentTimeMillis());
 
         try {
             Algorithm algorithm = Algorithm.HMAC256(JWT_SECRET_KEY.getBytes(StandardCharsets.UTF_8));

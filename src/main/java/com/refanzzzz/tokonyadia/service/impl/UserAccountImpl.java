@@ -9,7 +9,9 @@ import com.refanzzzz.tokonyadia.repository.UserAccountRepository;
 import com.refanzzzz.tokonyadia.service.UserAccountService;
 import com.refanzzzz.tokonyadia.specification.UserAccountSpecification;
 import com.refanzzzz.tokonyadia.util.SortUtil;
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -28,8 +30,28 @@ import org.springframework.web.server.ResponseStatusException;
 @RequiredArgsConstructor
 public class UserAccountImpl implements UserAccountService {
 
+    @Value("${tokonyadia.user-admin}")
+    private String USERNAME_ADMIN;
+
+    @Value("${tokonyadia.user-password}")
+    private String PASSWORD_ADMIN;
+
     private final UserAccountRepository userAccountRepository;
     private final PasswordEncoder passwordEncoder;
+
+    @PostConstruct
+    public void initUser() {
+        boolean exist = userAccountRepository.existsUserAccountByUsername(USERNAME_ADMIN);
+        if (exist) return;
+
+        UserAccount userAccount = UserAccount.builder()
+                .username(USERNAME_ADMIN)
+                .password(passwordEncoder.encode(PASSWORD_ADMIN))
+                .role(UserRole.ROLE_ADMIN)
+                .build();
+
+        userAccountRepository.saveAndFlush(userAccount);
+    }
 
     @Override
     public Page<UserAccountResponse> getAll(UserAccountRequest request) {

@@ -1,29 +1,32 @@
 ### GET Store
 GET localhost:8081/api/store
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJ0b2tvbnlhZGlhIiwiaWF0IjoxNzI5MDkwMzc4LCJleHAiOjE3MjkwOTA2NzgsInN1YiI6IjliYjJmMGY0LTlkMGYtNGFmYS1iZjdiLTdjNjFiMzAwZGQ1YSIsInJvbGUiOiJBZG1pbiJ9.7xddwHXo5tdng2Z98h84A8WmUWqa7y49omElSf34pOY
 
 ### POST Store
 POST {{localhost}}/store
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJ0b2tvbnlhZGlhIiwiaWF0IjoxNzI5MDkwMzc4LCJleHAiOjE3MjkwOTA2NzgsInN1YiI6IjliYjJmMGY0LTlkMGYtNGFmYS1iZjdiLTdjNjFiMzAwZGQ1YSIsInJvbGUiOiJBZG1pbiJ9.7xddwHXo5tdng2Z98h84A8WmUWqa7y49omElSf34pOY
 Content-Type: application/json
 
 {
-  "noSiup": "038383s882",
-  "name": "Toko Madara",
+  "noSiup": "038383s82",
+  "name": "Toko Sasuke",
   "address": "Jalan Hokage",
-  "phoneNumber": "08838383"
+  "phoneNumber": "088338383"
 }
 
 ### GET Store by ID
 GET {{localhost}}/store/d648fdbb-b7e0-40af-9e72-0fdd159d545e
 
 ### PUT Store
-PUT {{localhost}}/store/d648fdbb-b7e0-40af-9e72-0fdd159d545e
+PUT {{localhost}}/store/926b651d-a356-47cd-a228-00114ff100f4
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJ0b2tvbnlhZGlhIiwiaWF0IjoxNzI5MDkwNzk5LCJleHAiOjE3MjkwOTEwOTksInN1YiI6IjliYjJmMGY0LTlkMGYtNGFmYS1iZjdiLTdjNjFiMzAwZGQ1YSIsInJvbGUiOiJBZG1pbiJ9.dF0rtGLOU1KJj4OZvCWlSmkj4duGhDRU6i87JK_3TaA
 Content-Type: application/json
 
 {
-  "noSiup": "038383s8825",
-  "name": "Toko Madara 2",
-  "address": "Jalan Hokage 10",
-  "phoneNumber": "088383835"
+  "noSiup": "038383s82",
+  "name": "Toko Sasuke I",
+  "address": "Jalan Hokage",
+  "phoneNumber": "088338383"
 }
 
 ### DELETE Store

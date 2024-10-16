@@ -15,13 +15,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(path = "/api/auth")
+@RequestMapping(path = Constant.AUTH_API)
 @RequiredArgsConstructor
 public class AuthController {
 
     private final AuthService authService;
 
-    @PostMapping
+    @PostMapping("/login")
     public ResponseEntity<CommonResponse<LoginResponse>> login(@RequestBody LoginRequest request) {
         LoginResponse loginResponse = authService.login(request);
         return ResponseUtil.createResponse(HttpStatus.OK, "Login successfully", loginResponse);

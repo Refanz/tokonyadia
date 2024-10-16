@@ -31,6 +31,5 @@ public class AuthServiceImpl implements AuthService {
                 .accessToken(accessToken)
                 .role(userAccount.getRole().getDescription())
                 .build();
-
     }
 }
