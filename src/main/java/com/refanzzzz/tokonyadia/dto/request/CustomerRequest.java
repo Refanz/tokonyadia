@@ -8,7 +8,7 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @Getter
 @SuperBuilder
-public class CustomerRequest extends SearchingPagingAndSortingRequest {
+public class CustomerRequest extends UserAccountRequest {
     private String name;
     private String email;
     private String address;

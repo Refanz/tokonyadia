@@ -26,7 +26,7 @@ public class TransactionController implements Controller<CommonResponse<Transact
             @RequestParam(name = "query", required = false) String query,
             @RequestParam(name = "page", required = false, defaultValue = "1") Integer page,
             @RequestParam(name = "size", required = false, defaultValue = "10") Integer size,
-            @RequestParam(name = "sort", required = false) String sort) {
+            @RequestParam(name = "sortBy", required = false) String sort) {
 
         TransactionRequest transactionRequest = TransactionRequest
                 .builder()

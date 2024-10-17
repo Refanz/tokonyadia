@@ -12,6 +12,13 @@ public class Constant {
     public static final String LOGIN_API = AUTH_API + "/login";
 
 
+    public static final String SUCCESS_GET_ALL_CUSTOMER = "Successfully get all customer";
+    public static final String SUCCESS_GET_CUSTOMER = "Successfully get customer by id";
+    public static final String SUCCESS_DELETE_CUSTOMER = "Successfully delete customer";
+    public static final String SUCCESS_UPDATE_CUSTOMER = "Successfully update customer";
+    public static final String SUCCESS_CREATE_CUSTOMER = "Successfully create customer";
+    public static final String ERROR_GET_CUSTOMER = "Customer is not found!";
+
     public static final String ERROR_USERNAME_DUPLICATE = "Username has been registered!";
     public static final String MERCHANT_API = "/api/merchant";
 }

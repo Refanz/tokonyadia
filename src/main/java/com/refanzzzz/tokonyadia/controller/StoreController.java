@@ -26,7 +26,7 @@ public class StoreController implements Controller<CommonResponse<StoreResponse>
             @RequestParam(name = "q", required = false) String query,
             @RequestParam(name = "page", required = false, defaultValue = "1") Integer page,
             @RequestParam(name = "size", required = false, defaultValue = "10") Integer size,
-            @RequestParam(name = "sort", required = false) String sort) {
+            @RequestParam(name = "sortBy", required = false) String sort) {
 
         StoreRequest storeRequest = StoreRequest.builder()
                 .query(query)

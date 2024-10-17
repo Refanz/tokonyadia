@@ -1,7 +1,9 @@
 package com.refanzzzz.tokonyadia.dto.request;
 
-import com.refanzzzz.tokonyadia.entity.UserAccount;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 @AllArgsConstructor
@@ -9,7 +11,7 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @Getter
 @SuperBuilder
-public class MerchantRequest extends UserAccount {
+public class MerchantRequest extends UserAccountRequest {
     private String name;
     private String phoneNumber;
     private String address;
