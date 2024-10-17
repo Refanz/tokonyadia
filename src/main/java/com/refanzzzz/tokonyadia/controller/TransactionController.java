@@ -1,5 +1,6 @@
 package com.refanzzzz.tokonyadia.controller;
 
+import com.refanzzzz.tokonyadia.constant.Constant;
 import com.refanzzzz.tokonyadia.dto.request.TransactionRequest;
 import com.refanzzzz.tokonyadia.dto.response.CommonResponse;
 import com.refanzzzz.tokonyadia.dto.response.TransactionResponse;
@@ -9,6 +10,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import static com.refanzzzz.tokonyadia.constant.Constant.TRANSACTION_API;
@@ -19,6 +21,7 @@ import static com.refanzzzz.tokonyadia.constant.Constant.TRANSACTION_API;
 public class TransactionController implements Controller<CommonResponse<TransactionResponse>, TransactionRequest> {
 
     private TransactionService transactionService;
+
 
     @GetMapping
     @Override
@@ -47,11 +50,12 @@ public class TransactionController implements Controller<CommonResponse<Transact
         return ResponseUtil.createResponse(HttpStatus.OK, "Successfully get transaction", transactionResponse);
     }
 
+    @PreAuthorize("hasRole('ROLE_CUSTOMER')")
     @PostMapping
     @Override
     public ResponseEntity<CommonResponse<TransactionResponse>> create(@RequestBody TransactionRequest request) {
-        TransactionResponse transactionResponse = transactionService.create(request);
-        return ResponseUtil.createResponse(HttpStatus.CREATED, "Successfully create transaction", transactionResponse);
+        TransactionResponse transactionResponse = transactionService.createTransaction(request);
+        return ResponseUtil.createResponse(HttpStatus.CREATED, Constant.SUCCESS_CREATE_TRANSACTION, transactionResponse);
     }
 
     @DeleteMapping("/{id}")

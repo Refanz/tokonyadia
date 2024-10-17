@@ -5,4 +5,5 @@ import com.refanzzzz.tokonyadia.dto.response.TransactionResponse;
 import com.refanzzzz.tokonyadia.entity.Transaction;
 
 public interface TransactionService extends BaseService<TransactionRequest, TransactionResponse, Transaction> {
+    TransactionResponse createTransaction(TransactionRequest request);
 }

@@ -7,9 +7,10 @@ GET {{localhost}}/transaction/f91b494d-d2fe-476b-8e18-0a62b9077374
 ### POST Transaction
 POST {{localhost}}/transaction
 Content-Type: application/json
+Authorization: Bearer {{access_token}}
 
 {
-  "customerId": "ffb57840-7b66-4ec4-925b-27e4fdc3d0c6"
+  "customerId": "2ae91d5f-84f7-4579-a731-6314eb0bb44e"
 }
 
 ### PUT Transaction

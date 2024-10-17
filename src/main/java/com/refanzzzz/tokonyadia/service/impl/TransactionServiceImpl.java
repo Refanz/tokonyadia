@@ -8,6 +8,7 @@ import com.refanzzzz.tokonyadia.repository.TransactionRepository;
 import com.refanzzzz.tokonyadia.service.CustomerService;
 import com.refanzzzz.tokonyadia.service.TransactionService;
 import com.refanzzzz.tokonyadia.specification.TransactionSpecification;
+import com.refanzzzz.tokonyadia.util.DateUtil;
 import com.refanzzzz.tokonyadia.util.SortUtil;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -17,8 +18,11 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Optional;
 
 @Service
@@ -27,6 +31,20 @@ public class TransactionServiceImpl implements TransactionService {
 
     private TransactionRepository transactionRepository;
     private CustomerService customerService;
+
+    @Transactional(rollbackFor = Exception.class)
+    public TransactionResponse createTransaction(TransactionRequest transactionRequest) {
+        Customer customer = customerService.getOne(transactionRequest.getCustomerId());
+
+        Transaction transaction = Transaction.builder()
+                .customer(customer)
+                .transactionDetails(new ArrayList<>())
+                .build();
+
+        Transaction savedTransaction = transactionRepository.saveAndFlush(transaction);
+
+        return toTransactionResponse(savedTransaction);
+    }
 
     @Override
     public Page<TransactionResponse> getAll(TransactionRequest request) {
@@ -50,7 +68,7 @@ public class TransactionServiceImpl implements TransactionService {
     public TransactionResponse create(TransactionRequest request) {
         Customer customer = customerService.getOne(request.getCustomerId());
         Transaction transaction = Transaction.builder()
-                .transactionDate(request.getTransactionDate())
+                .transactionDate(LocalDateTime.parse(request.getTransactionDate()))
                 .customer(customer)
                 .build();
 
@@ -68,7 +86,7 @@ public class TransactionServiceImpl implements TransactionService {
     public TransactionResponse update(String id, TransactionRequest request) {
         Transaction transaction = getOne(id);
 
-        transaction.setTransactionDate(request.getTransactionDate());
+        //transaction.setTransactionDate(request.getTransactionDate());
         transactionRepository.saveAndFlush(transaction);
 
         return toTransactionResponse(transaction);
@@ -77,8 +95,8 @@ public class TransactionServiceImpl implements TransactionService {
     private TransactionResponse toTransactionResponse(Transaction transaction) {
         return TransactionResponse.builder()
                 .id(transaction.getId())
-                .transactionDate(transaction.getTransactionDate())
-                .customer(transaction.getCustomer())
+                .customerId(transaction.getCustomer().getId())
+                .transactionDate(DateUtil.parseDateToString(transaction.getTransactionDate()))
                 .build();
     }
 

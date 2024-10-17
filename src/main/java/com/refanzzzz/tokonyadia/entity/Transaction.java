@@ -5,6 +5,7 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "t_transaction")
@@ -22,6 +23,9 @@ public class Transaction extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "customer_id")
     private Customer customer;
+
+    @OneToMany(mappedBy = "transaction")
+    private List<TransactionDetail> transactionDetails;
 
     @PrePersist
     protected void prePersist() {

@@ -19,6 +19,9 @@ public class Constant {
     public static final String SUCCESS_CREATE_CUSTOMER = "Successfully create customer";
     public static final String ERROR_GET_CUSTOMER = "Customer is not found!";
 
+    public static final String SUCCESS_CREATE_TRANSACTION = "Successfully create transaction";
+
     public static final String ERROR_USERNAME_DUPLICATE = "Username has been registered!";
     public static final String MERCHANT_API = "/api/merchant";
+    public static final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
 }

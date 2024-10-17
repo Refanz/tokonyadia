@@ -3,7 +3,7 @@ POST {{localhost}}/auth/login
 Content-Type: application/json
 
 {
-  "username": "admin",
+  "username": "ayuu",
   "password": "123"
 }
 

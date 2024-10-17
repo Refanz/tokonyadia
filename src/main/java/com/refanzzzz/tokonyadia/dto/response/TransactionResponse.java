@@ -12,6 +12,6 @@ import java.time.LocalDateTime;
 @Builder
 public class TransactionResponse {
     private String id;
-    private LocalDateTime transactionDate;
-    private Customer customer;
+    private String transactionDate;
+    private String customerId;
 }
