@@ -19,8 +19,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.function.Function;
-
 @Service
 @RequiredArgsConstructor
 public class TransactionDetailServiceImpl implements TransactionDetailService {
@@ -46,17 +44,17 @@ public class TransactionDetailServiceImpl implements TransactionDetailService {
     }
 
     @Override
-    public TransactionDetailResponse create(TransactionDetailRequest data) {
+    public TransactionDetailResponse create(TransactionDetailRequest request) {
 
-        Transaction transaction = transactionService.getOne(data.getTransactionId());
-        Product product = productService.getOne(data.getProductId());
+        Transaction transaction = transactionService.getOne(request.getTransactionId());
+        Product product = productService.getOne(request.getProductId());
 
         TransactionDetail transactionDetail = TransactionDetail
                 .builder()
                 .transaction(transaction)
                 .product(product)
-                .qty(data.getQty())
-                .price(data.getPrice())
+                .qty(request.getQty())
+                .price(request.getPrice())
                 .build();
         transactionDetailRepository.saveAndFlush(transactionDetail);
 
@@ -75,10 +73,10 @@ public class TransactionDetailServiceImpl implements TransactionDetailService {
     }
 
     @Override
-    public TransactionDetailResponse update(String id, TransactionDetailRequest data) {
+    public TransactionDetailResponse update(String id, TransactionDetailRequest request) {
         TransactionDetail transactionDetail = getOne(id);
-        transactionDetail.setPrice(data.getPrice());
-        transactionDetail.setQty(data.getQty());
+        transactionDetail.setPrice(request.getPrice());
+        transactionDetail.setQty(request.getQty());
 
         transactionDetailRepository.saveAndFlush(transactionDetail);
         return toTransactionDetailResponse(transactionDetail);

@@ -13,4 +13,5 @@ public class Constant {
 
 
     public static final String ERROR_USERNAME_DUPLICATE = "Username has been registered!";
+    public static final String MERCHANT_API = "/api/merchant";
 }

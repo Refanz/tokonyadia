@@ -1,0 +1,16 @@
+### Create Merchant Account
+POST {{localhost}}/merchant
+Content-Type: application/json
+
+{
+  "name": "Refan Surya",
+  "phoneNumber": "08363727",
+  "address": "Jalan Mawar 10",
+  "email": "refansaa@gmail.com",
+  "username": "refansaa",
+  "password": "123"
+}
+
+### GET All Merchant
+GET {{localhost}}/merchant?q=refan sa
+Authorization: Bearer {{access_token}}

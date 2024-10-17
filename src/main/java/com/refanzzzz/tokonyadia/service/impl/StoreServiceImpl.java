@@ -46,12 +46,12 @@ public class StoreServiceImpl implements StoreService {
     }
 
     @Override
-    public StoreResponse create(StoreRequest data) {
+    public StoreResponse create(StoreRequest request) {
         Store store = Store.builder()
-                .name(data.getName())
-                .noSiup(data.getNoSiup())
-                .address(data.getAddress())
-                .phoneNumber(data.getPhoneNumber())
+                .name(request.getName())
+                .noSiup(request.getNoSiup())
+                .address(request.getAddress())
+                .phoneNumber(request.getPhoneNumber())
                 .build();
 
         storeRepository.saveAndFlush(store);
@@ -66,13 +66,13 @@ public class StoreServiceImpl implements StoreService {
     }
 
     @Override
-    public StoreResponse update(String id, StoreRequest data) {
+    public StoreResponse update(String id, StoreRequest request) {
         Store store = getOne(id);
 
-        store.setName(data.getName());
-        store.setNoSiup(data.getNoSiup());
-        store.setPhoneNumber(data.getPhoneNumber());
-        store.setAddress(data.getAddress());
+        store.setName(request.getName());
+        store.setNoSiup(request.getNoSiup());
+        store.setPhoneNumber(request.getPhoneNumber());
+        store.setAddress(request.getAddress());
 
         storeRepository.saveAndFlush(store);
         return toStoreResponse(store);

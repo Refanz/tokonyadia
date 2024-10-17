@@ -20,7 +20,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Optional;
-import java.util.function.Function;
 
 @Service
 @AllArgsConstructor
@@ -48,10 +47,10 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
-    public TransactionResponse create(TransactionRequest data) {
-        Customer customer = customerService.getOne(data.getCustomerId());
+    public TransactionResponse create(TransactionRequest request) {
+        Customer customer = customerService.getOne(request.getCustomerId());
         Transaction transaction = Transaction.builder()
-                .transactionDate(data.getTransactionDate())
+                .transactionDate(request.getTransactionDate())
                 .customer(customer)
                 .build();
 
@@ -66,10 +65,10 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
-    public TransactionResponse update(String id, TransactionRequest data) {
+    public TransactionResponse update(String id, TransactionRequest request) {
         Transaction transaction = getOne(id);
 
-        transaction.setTransactionDate(data.getTransactionDate());
+        transaction.setTransactionDate(request.getTransactionDate());
         transactionRepository.saveAndFlush(transaction);
 
         return toTransactionResponse(transaction);

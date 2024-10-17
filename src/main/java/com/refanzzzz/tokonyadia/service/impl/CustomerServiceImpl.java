@@ -49,12 +49,12 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public CustomerResponse create(CustomerRequest data) {
+    public CustomerResponse create(CustomerRequest request) {
         Customer customer = Customer.builder()
-                .name(data.getName())
-                .email(data.getEmail())
-                .phoneNumber(data.getPhoneNumber())
-                .address(data.getAddress())
+                .name(request.getName())
+                .email(request.getEmail())
+                .phoneNumber(request.getPhoneNumber())
+                .address(request.getAddress())
                 .build();
 
         customerRepository.saveAndFlush(customer);
@@ -68,13 +68,13 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public CustomerResponse update(String id, CustomerRequest data) {
+    public CustomerResponse update(String id, CustomerRequest request) {
         Customer customer = getOne(id);
 
-        customer.setName(data.getName());
-        customer.setEmail(data.getEmail());
-        customer.setAddress(data.getAddress());
-        customer.setPhoneNumber(data.getPhoneNumber());
+        customer.setName(request.getName());
+        customer.setEmail(request.getEmail());
+        customer.setAddress(request.getAddress());
+        customer.setPhoneNumber(request.getPhoneNumber());
 
         Customer savedCustomer = customerRepository.save(customer);
         return toCustomerResponse(savedCustomer);

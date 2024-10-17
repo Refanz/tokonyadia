@@ -37,6 +37,8 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(request ->
                         request.dispatcherTypeMatchers(DispatcherType.ERROR).permitAll()
                                 .requestMatchers(HttpMethod.POST, Constant.LOGIN_API).permitAll()
+                                .requestMatchers(HttpMethod.POST, Constant.CUSTOMER_API).permitAll()
+                                .requestMatchers(HttpMethod.POST, Constant.MERCHANT_API).permitAll()
                                 .requestMatchers("/api/user-account/**").permitAll()
                                 .anyRequest().authenticated()
                 )

@@ -20,8 +20,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.function.Function;
-
 @Service
 @AllArgsConstructor
 public class ProductServiceImpl implements ProductService {
@@ -48,8 +46,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductResponse create(ProductRequest data) {
-        StoreResponse storeResponse = storeService.getById(data.getStoreId());
+    public ProductResponse create(ProductRequest request) {
+        StoreResponse storeResponse = storeService.getById(request.getStoreId());
 
         Store store = Store.builder()
                 .id(storeResponse.getId())
@@ -60,10 +58,10 @@ public class ProductServiceImpl implements ProductService {
                 .build();
 
         Product product = Product.builder()
-                .name(data.getName())
-                .description(data.getDescription())
-                .stock(data.getStock())
-                .price(data.getPrice())
+                .name(request.getName())
+                .description(request.getDescription())
+                .stock(request.getStock())
+                .price(request.getPrice())
                 .store(store)
                 .build();
 
@@ -79,13 +77,13 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductResponse update(String id, ProductRequest data) {
+    public ProductResponse update(String id, ProductRequest request) {
         Product product = getOne(id);
 
-        product.setName(data.getName());
-        product.setDescription(data.getDescription());
-        product.setStock(data.getStock());
-        product.setPrice(data.getPrice());
+        product.setName(request.getName());
+        product.setDescription(request.getDescription());
+        product.setStock(request.getStock());
+        product.setPrice(request.getPrice());
 
         productRepository.saveAndFlush(product);
 

@@ -1,6 +1,6 @@
 ### GET Store
 GET localhost:8081/api/store
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJ0b2tvbnlhZGlhIiwiaWF0IjoxNzI5MDkwMzc4LCJleHAiOjE3MjkwOTA2NzgsInN1YiI6IjliYjJmMGY0LTlkMGYtNGFmYS1iZjdiLTdjNjFiMzAwZGQ1YSIsInJvbGUiOiJBZG1pbiJ9.7xddwHXo5tdng2Z98h84A8WmUWqa7y49omElSf34pOY
+Authorization: Bearer {{access_token}}
 
 ### POST Store
 POST {{localhost}}/store
