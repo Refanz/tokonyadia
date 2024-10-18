@@ -12,10 +12,10 @@ Authorization: Bearer {{access_token}}
 
 {
   "address": "Jalan",
-  "name":"Ayu",
-  "email": "ayu@gmail.com",
+  "name":"Refan",
+  "email": "refan@gmail.com",
   "phoneNumber": "0872622",
-  "username": "ayuu",
+  "username": "refanzzzz",
   "password": "123"
 }
 

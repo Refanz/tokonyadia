@@ -1,5 +1,6 @@
 package com.refanzzzz.tokonyadia.entity;
 
+import com.refanzzzz.tokonyadia.constant.TransactionStatus;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -20,11 +21,15 @@ public class Transaction extends BaseEntity {
     @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime transactionDate;
 
+    @Column(name = "transaction_status", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private TransactionStatus transactionStatus;
+
     @ManyToOne
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
-    @OneToMany(mappedBy = "transaction")
+    @OneToMany(mappedBy = "transaction", cascade = CascadeType.MERGE)
     private List<TransactionDetail> transactionDetails;
 
     @PrePersist

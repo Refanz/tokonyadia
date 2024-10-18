@@ -1,0 +1,20 @@
+### Create Cart
+POST {{localhost}}/cart
+Authorization: Bearer {{access_token}}
+Content-Type: application/json
+
+{
+  "customerId": "aeb1417d-96b8-420b-98fe-6e4d63591ace",
+  "storeId": "a49c5b1b-dc65-48f8-9225-afc436bd5f01"
+}
+
+### Add Item Cart
+POST {{localhost}}/cart/07aed0a3-b02f-4bba-8a4a-cbee0980449c/items
+Authorization: Bearer {{access_token}}
+Content-Type: application/json
+
+{
+  "productId": "814da777-0306-4be4-9447-fdab86ef60d1",
+  "qty": 10,
+  "cartId": "07aed0a3-b02f-4bba-8a4a-cbee0980449c"
+}

@@ -18,6 +18,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 @Service
@@ -45,6 +46,7 @@ public class ProductServiceImpl implements ProductService {
         return toProductResponse(product);
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public ProductResponse create(ProductRequest request) {
         StoreResponse storeResponse = storeService.getById(request.getStoreId());

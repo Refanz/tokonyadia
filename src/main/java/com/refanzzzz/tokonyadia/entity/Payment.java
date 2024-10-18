@@ -1,9 +1,7 @@
 package com.refanzzzz.tokonyadia.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
+import com.refanzzzz.tokonyadia.constant.PaymentStatus;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,7 +17,17 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 public class Payment extends BaseEntity {
 
+    @Column(name = "amount")
+    private Long amount;
+
+    @Column(name = "payment_method")
+    private String paymentMethod;
+
+    @Column(name = "payment_status")
+    @Enumerated(EnumType.STRING)
+    private PaymentStatus paymentStatus;
+
     @OneToOne
-    @JoinColumn(name = "payment_method_id")
-    private PaymentMethod paymentMethod;
+    @JoinColumn(name = "transaction_id")
+    private Transaction transaction;
 }

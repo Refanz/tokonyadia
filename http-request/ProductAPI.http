@@ -6,6 +6,7 @@ GET localhost:8081/api/product?sortBy=name
 
 ### POST Product
 POST localhost:8081/api/product
+Authorization: Bearer {{access_token}}
 Content-Type: application/json
 
 {
@@ -13,7 +14,7 @@ Content-Type: application/json
   "description": "Jajanan chiki bola bola dengan rasa keju",
   "price": 3000,
   "stock": 20,
-  "storeId": "d709a133-87a8-4085-824c-3f8e3cf2005e"
+  "storeId": "a49c5b1b-dc65-48f8-9225-afc436bd5f01"
 }
 
 ### DELETE Product

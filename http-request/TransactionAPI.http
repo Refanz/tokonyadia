@@ -1,23 +1,19 @@
-### GET All Transaction
-GET {{localhost}}/transaction
-
-### GET Transaction By ID
-GET {{localhost}}/transaction/f91b494d-d2fe-476b-8e18-0a62b9077374
-
-### POST Transaction
+### CREATE Transaction
 POST {{localhost}}/transaction
-Content-Type: application/json
 Authorization: Bearer {{access_token}}
+Content-Type: application/json
 
 {
-  "customerId": "2ae91d5f-84f7-4579-a731-6314eb0bb44e"
+  "customerId": "aeb1417d-96b8-420b-98fe-6e4d63591ace"
 }
 
-### PUT Transaction
-PUT {{localhost}}/transaction/f91b494d-d2fe-476b-8e18-0a62b9077374
+### Add Item Transaction
+POST {{localhost}}/transaction/7bba7c22-af8d-46ba-98b6-8405612d58dc/items
+Authorization: Bearer {{access_token}}
 Content-Type: application/json
 
 {
-  "transactionDate": ""
+  "productId": "814da777-0306-4be4-9447-fdab86ef60d1",
+  "qty": 10
 }
 

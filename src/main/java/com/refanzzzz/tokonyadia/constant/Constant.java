@@ -8,7 +8,7 @@ public class Constant {
     public static final String TRANSACTION_DETAIL_API = "/api/transaction-detail";
     public static final String USER_ACCOUNT_API = "/api/user-account";
     public static final String AUTH_API = "/api/auth";
-
+    public static final String CART_API = "/api/cart";
     public static final String LOGIN_API = AUTH_API + "/login";
 
 
@@ -24,4 +24,7 @@ public class Constant {
     public static final String ERROR_USERNAME_DUPLICATE = "Username has been registered!";
     public static final String MERCHANT_API = "/api/merchant";
     public static final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
+
+    public static final String SUCCESS_ADD_ITEM_TRANSACTION = "Successfully add item to transaction";
+    public static final String ERROR_GET_CART = "Cart is not found!";
 }
