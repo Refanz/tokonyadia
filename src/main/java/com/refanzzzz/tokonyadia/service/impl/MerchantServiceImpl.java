@@ -10,6 +10,7 @@ import com.refanzzzz.tokonyadia.repository.MerchantRepository;
 import com.refanzzzz.tokonyadia.service.MerchantService;
 import com.refanzzzz.tokonyadia.service.UserAccountService;
 import com.refanzzzz.tokonyadia.specification.MerchantSpecification;
+import com.refanzzzz.tokonyadia.util.MapperUtil;
 import com.refanzzzz.tokonyadia.util.SortUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -37,13 +38,13 @@ public class MerchantServiceImpl implements MerchantService {
         Specification<Merchant> merchantSpecification = MerchantSpecification.getMerchantSpecification(request);
         Pageable pageable = PageRequest.of(searchRequest.getPage(), searchRequest.getSize(), sortBy);
 
-        return merchantRepository.findAll(merchantSpecification, pageable).map((this::toMerchantResponse));
+        return merchantRepository.findAll(merchantSpecification, pageable).map((MapperUtil::toMerchantResponse));
     }
 
     @Override
     public MerchantResponse getById(String id) {
         Merchant merchant = getOne(id);
-        return toMerchantResponse(merchant);
+        return MapperUtil.toMerchantResponse(merchant);
     }
 
     @Transactional(rollbackFor = Exception.class)
@@ -66,7 +67,7 @@ public class MerchantServiceImpl implements MerchantService {
                 .build();
 
         Merchant savedMerchant = merchantRepository.saveAndFlush(merchant);
-        return toMerchantResponse(savedMerchant);
+        return MapperUtil.toMerchantResponse(savedMerchant);
     }
 
     @Override
@@ -91,16 +92,6 @@ public class MerchantServiceImpl implements MerchantService {
 
         merchantRepository.saveAndFlush(merchant);
 
-        return toMerchantResponse(merchant);
-    }
-
-    private MerchantResponse toMerchantResponse(Merchant merchant) {
-        return MerchantResponse.builder()
-                .id(merchant.getId())
-                .name(merchant.getName())
-                .email(merchant.getEmail())
-                .phoneNumber(merchant.getPhoneNumber())
-                .userId(merchant.getUserAccount().getId())
-                .build();
+        return MapperUtil.toMerchantResponse(merchant);
     }
 }

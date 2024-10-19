@@ -1,5 +1,6 @@
-package com.refanzzzz.tokonyadia.dto.request;
+package com.refanzzzz.tokonyadia.dto.request.transaction;
 
+import com.refanzzzz.tokonyadia.dto.request.SearchingPagingAndSortingRequest;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 

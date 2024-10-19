@@ -10,6 +10,7 @@ import com.refanzzzz.tokonyadia.repository.CustomerRepository;
 import com.refanzzzz.tokonyadia.service.CustomerService;
 import com.refanzzzz.tokonyadia.service.UserAccountService;
 import com.refanzzzz.tokonyadia.specification.CustomerSpecification;
+import com.refanzzzz.tokonyadia.util.MapperUtil;
 import com.refanzzzz.tokonyadia.util.SortUtil;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -38,7 +39,7 @@ public class CustomerServiceImpl implements CustomerService {
 
         Page<Customer> customerResponsePage = customerRepository.findAll(customerSpecification, pageable);
 
-        return customerResponsePage.map(this::toCustomerResponse);
+        return customerResponsePage.map(MapperUtil::toCustomerResponse);
     }
 
     @Override
@@ -74,7 +75,7 @@ public class CustomerServiceImpl implements CustomerService {
                 .build();
 
         customerRepository.saveAndFlush(customer);
-        return toCustomerResponse(customer);
+        return MapperUtil.toCustomerResponse(customer);
     }
 
     @Override
@@ -93,22 +94,11 @@ public class CustomerServiceImpl implements CustomerService {
         customer.setPhoneNumber(request.getPhoneNumber());
 
         Customer savedCustomer = customerRepository.save(customer);
-        return toCustomerResponse(savedCustomer);
+        return MapperUtil.toCustomerResponse(savedCustomer);
     }
 
     @Override
     public Customer getOne(String id) {
         return customerRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, Constant.ERROR_GET_CUSTOMER));
-    }
-
-    private CustomerResponse toCustomerResponse(Customer customer) {
-        return CustomerResponse.builder()
-                .id(customer.getId())
-                .name(customer.getName())
-                .userid(customer.getUserAccount().getId())
-                .email(customer.getEmail())
-                .address(customer.getAddress())
-                .phoneNumber(customer.getPhoneNumber())
-                .build();
     }
 }

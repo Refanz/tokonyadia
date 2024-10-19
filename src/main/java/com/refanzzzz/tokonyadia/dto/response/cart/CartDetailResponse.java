@@ -1,4 +1,4 @@
-package com.refanzzzz.tokonyadia.dto.response;
+package com.refanzzzz.tokonyadia.dto.response.cart;
 
 import lombok.*;
 
@@ -9,7 +9,7 @@ import lombok.*;
 @Builder
 public class CartDetailResponse {
     private String id;
-    private String cartId;
-    private String productId;
+    private String productName;
     private Integer qty;
+    private Long price;
 }

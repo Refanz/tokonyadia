@@ -9,6 +9,7 @@ import com.refanzzzz.tokonyadia.repository.ProductRepository;
 import com.refanzzzz.tokonyadia.service.ProductService;
 import com.refanzzzz.tokonyadia.service.StoreService;
 import com.refanzzzz.tokonyadia.specification.ProductSpecification;
+import com.refanzzzz.tokonyadia.util.MapperUtil;
 import com.refanzzzz.tokonyadia.util.SortUtil;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -37,13 +38,13 @@ public class ProductServiceImpl implements ProductService {
 
         Page<Product> productPage = productRepository.findAll(specification, pageable);
 
-        return productPage.map(this::toProductResponse);
+        return productPage.map(MapperUtil::toProductResponse);
     }
 
     @Override
     public ProductResponse getById(String id) {
         Product product = getOne(id);
-        return toProductResponse(product);
+        return MapperUtil.toProductResponse(product);
     }
 
     @Transactional(rollbackFor = Exception.class)
@@ -69,7 +70,7 @@ public class ProductServiceImpl implements ProductService {
 
         productRepository.saveAndFlush(product);
 
-        return toProductResponse(product);
+        return MapperUtil.toProductResponse(product);
     }
 
     @Override
@@ -89,18 +90,7 @@ public class ProductServiceImpl implements ProductService {
 
         productRepository.saveAndFlush(product);
 
-        return toProductResponse(product);
-    }
-
-    private ProductResponse toProductResponse(Product product) {
-        return ProductResponse.builder()
-                .id(product.getId())
-                .name(product.getName())
-                .description(product.getDescription())
-                .price(product.getPrice())
-                .stock(product.getStock())
-                .storeId(product.getStore().getId())
-                .build();
+        return MapperUtil.toProductResponse(product);
     }
 
     @Override

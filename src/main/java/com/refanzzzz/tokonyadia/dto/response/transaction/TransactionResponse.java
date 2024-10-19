@@ -1,9 +1,6 @@
-package com.refanzzzz.tokonyadia.dto.response;
+package com.refanzzzz.tokonyadia.dto.response.transaction;
 
-import com.refanzzzz.tokonyadia.entity.Customer;
 import lombok.*;
-
-import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @NoArgsConstructor

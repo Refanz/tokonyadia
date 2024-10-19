@@ -8,10 +8,10 @@ Authorization: Bearer {{access_token}}
 Content-Type: application/json
 
 {
-  "noSiup": "038383s82",
-  "name": "Toko Sasuke",
+  "noSiup": "03838382",
+  "name": "Toko Naruto",
   "address": "Jalan Hokage",
-  "phoneNumber": "088338383"
+  "phoneNumber": "88338383"
 }
 
 ### GET Store by ID

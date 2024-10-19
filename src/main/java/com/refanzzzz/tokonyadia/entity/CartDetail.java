@@ -19,6 +19,9 @@ public class CartDetail extends BaseEntity {
     @Column(name = "qty")
     private Integer qty;
 
+    @Column(name = "price")
+    private Long price;
+
     @ManyToOne
     @JoinColumn(name = "cart_id")
     private Cart cart;

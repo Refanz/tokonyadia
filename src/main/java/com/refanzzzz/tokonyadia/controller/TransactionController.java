@@ -1,10 +1,10 @@
 package com.refanzzzz.tokonyadia.controller;
 
 import com.refanzzzz.tokonyadia.constant.Constant;
-import com.refanzzzz.tokonyadia.dto.request.TransactionDetailRequest;
-import com.refanzzzz.tokonyadia.dto.request.TransactionRequest;
+import com.refanzzzz.tokonyadia.dto.request.transaction.TransactionDetailRequest;
+import com.refanzzzz.tokonyadia.dto.request.transaction.TransactionRequest;
 import com.refanzzzz.tokonyadia.dto.response.CommonResponse;
-import com.refanzzzz.tokonyadia.dto.response.TransactionResponse;
+import com.refanzzzz.tokonyadia.dto.response.transaction.TransactionResponse;
 import com.refanzzzz.tokonyadia.service.TransactionService;
 import com.refanzzzz.tokonyadia.util.ResponseUtil;
 import lombok.AllArgsConstructor;

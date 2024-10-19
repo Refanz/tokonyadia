@@ -1,4 +1,4 @@
-package com.refanzzzz.tokonyadia.dto.request;
+package com.refanzzzz.tokonyadia.dto.request.cart;
 
 import lombok.*;
 

@@ -1,7 +1,7 @@
 package com.refanzzzz.tokonyadia.service.impl;
 
-import com.refanzzzz.tokonyadia.dto.request.TransactionDetailRequest;
-import com.refanzzzz.tokonyadia.dto.response.TransactionDetailResponse;
+import com.refanzzzz.tokonyadia.dto.request.transaction.TransactionDetailRequest;
+import com.refanzzzz.tokonyadia.dto.response.transaction.TransactionDetailResponse;
 import com.refanzzzz.tokonyadia.entity.Product;
 import com.refanzzzz.tokonyadia.entity.Transaction;
 import com.refanzzzz.tokonyadia.entity.TransactionDetail;
@@ -9,6 +9,7 @@ import com.refanzzzz.tokonyadia.repository.TransactionDetailRepository;
 import com.refanzzzz.tokonyadia.service.ProductService;
 import com.refanzzzz.tokonyadia.service.TransactionDetailService;
 import com.refanzzzz.tokonyadia.service.TransactionService;
+import com.refanzzzz.tokonyadia.util.MapperUtil;
 import com.refanzzzz.tokonyadia.util.SortUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -29,18 +30,17 @@ public class TransactionDetailServiceImpl implements TransactionDetailService {
 
     @Override
     public Page<TransactionDetailResponse> getAll(TransactionDetailRequest request) {
-
         Sort sortBy = SortUtil.parseSort(request.getSortBy());
         Pageable pageable = PageRequest.of(request.getPage(), request.getSize(), sortBy);
         Page<TransactionDetail> transactionDetails = transactionDetailRepository.findAll(pageable);
 
-        return transactionDetails.map(this::toTransactionDetailResponse);
+        return transactionDetails.map(MapperUtil::toTransactionDetailResponse);
     }
 
     @Override
     public TransactionDetailResponse getById(String id) {
         TransactionDetail transactionDetail = getOne(id);
-        return toTransactionDetailResponse(transactionDetail);
+        return MapperUtil.toTransactionDetailResponse(transactionDetail);
     }
 
     @Override
@@ -58,7 +58,7 @@ public class TransactionDetailServiceImpl implements TransactionDetailService {
                 .build();
         transactionDetailRepository.saveAndFlush(transactionDetail);
 
-        return toTransactionDetailResponse(transactionDetail);
+        return MapperUtil.toTransactionDetailResponse(transactionDetail);
     }
 
     @Override
@@ -79,17 +79,6 @@ public class TransactionDetailServiceImpl implements TransactionDetailService {
         transactionDetail.setQty(request.getQty());
 
         transactionDetailRepository.saveAndFlush(transactionDetail);
-        return toTransactionDetailResponse(transactionDetail);
-    }
-
-    private TransactionDetailResponse toTransactionDetailResponse(TransactionDetail transactionDetail) {
-        return TransactionDetailResponse
-                .builder()
-                .id(transactionDetail.getId())
-                .price(transactionDetail.getPrice())
-                .qty(transactionDetail.getQty())
-                .transactionId(transactionDetail.getTransaction().getId())
-                .productId(transactionDetail.getProduct().getId())
-                .build();
+        return MapperUtil.toTransactionDetailResponse(transactionDetail);
     }
 }

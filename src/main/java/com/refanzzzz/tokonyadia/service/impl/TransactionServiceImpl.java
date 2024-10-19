@@ -1,19 +1,20 @@
 package com.refanzzzz.tokonyadia.service.impl;
 
 import com.refanzzzz.tokonyadia.constant.TransactionStatus;
-import com.refanzzzz.tokonyadia.dto.request.TransactionDetailRequest;
-import com.refanzzzz.tokonyadia.dto.request.TransactionRequest;
-import com.refanzzzz.tokonyadia.dto.response.TransactionResponse;
+import com.refanzzzz.tokonyadia.dto.request.transaction.TransactionDetailRequest;
+import com.refanzzzz.tokonyadia.dto.request.transaction.TransactionRequest;
+import com.refanzzzz.tokonyadia.dto.response.transaction.TransactionResponse;
 import com.refanzzzz.tokonyadia.entity.Customer;
 import com.refanzzzz.tokonyadia.entity.Product;
 import com.refanzzzz.tokonyadia.entity.Transaction;
 import com.refanzzzz.tokonyadia.entity.TransactionDetail;
 import com.refanzzzz.tokonyadia.repository.TransactionRepository;
+import com.refanzzzz.tokonyadia.service.CartService;
 import com.refanzzzz.tokonyadia.service.CustomerService;
 import com.refanzzzz.tokonyadia.service.ProductService;
 import com.refanzzzz.tokonyadia.service.TransactionService;
 import com.refanzzzz.tokonyadia.specification.TransactionSpecification;
-import com.refanzzzz.tokonyadia.util.DateUtil;
+import com.refanzzzz.tokonyadia.util.MapperUtil;
 import com.refanzzzz.tokonyadia.util.SortUtil;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -36,6 +37,7 @@ public class TransactionServiceImpl implements TransactionService {
     private TransactionRepository transactionRepository;
     private CustomerService customerService;
     private ProductService productService;
+    private CartService cartService;
 
     @Transactional(rollbackFor = Exception.class)
     public TransactionResponse createTransaction(TransactionRequest transactionRequest) {
@@ -49,7 +51,7 @@ public class TransactionServiceImpl implements TransactionService {
 
         Transaction savedTransaction = transactionRepository.saveAndFlush(transaction);
 
-        return toTransactionResponse(savedTransaction);
+        return MapperUtil.toTransactionResponse(savedTransaction);
     }
 
     @Transactional(rollbackFor = Exception.class)
@@ -70,7 +72,7 @@ public class TransactionServiceImpl implements TransactionService {
 
         transactionRepository.saveAndFlush(transaction);
 
-        return toTransactionResponse(transaction);
+        return MapperUtil.toTransactionResponse(transaction);
     }
 
     @Transactional(readOnly = true)
@@ -82,35 +84,33 @@ public class TransactionServiceImpl implements TransactionService {
 
         Page<Transaction> transactionPage = transactionRepository.findAll(specification, pageable);
 
-        return transactionPage.map(this::toTransactionResponse);
+        return transactionPage.map(MapperUtil::toTransactionResponse);
     }
 
     @Transactional(readOnly = true)
     @Override
     public TransactionResponse getTransactionById(String id) {
         Transaction transaction = getOne(id);
-        return toTransactionResponse(transaction);
+        return MapperUtil.toTransactionResponse(transaction);
     }
+//
+//    @Transactional(rollbackFor = Exception.class)
+//    @Override
+//    public TransactionResponse checkoutTransaction(String transactionId) {
+//        cartService.
+//
+//        Transaction transaction = getOne(transactionId);
+//
+//
+//        return null;
+//    }
 
-    @Transactional(rollbackFor = Exception.class)
-    @Override
-    public TransactionResponse checkoutTransaction(String transactionId) {
-        Transaction transaction = getOne(transactionId);
-        return null;
-    }
+//    private Transaction
 
     @Transactional(readOnly = true)
     @Override
     public Transaction getOne(String transactionId) {
         Optional<Transaction> optionalTransaction = transactionRepository.findById(transactionId);
         return optionalTransaction.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Transaction is not found!"));
-    }
-
-    private TransactionResponse toTransactionResponse(Transaction transaction) {
-        return TransactionResponse.builder()
-                .id(transaction.getId())
-                .customerId(transaction.getCustomer().getId())
-                .transactionDate(DateUtil.parseDateToString(transaction.getTransactionDate()))
-                .build();
     }
 }

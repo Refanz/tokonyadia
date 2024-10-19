@@ -10,9 +10,9 @@ Authorization: Bearer {{access_token}}
 Content-Type: application/json
 
 {
-  "name": "Chiki Choco",
+  "name": "Oreno",
   "description": "Jajanan chiki bola bola dengan rasa keju",
-  "price": 3000,
+  "price": 5000,
   "stock": 20,
   "storeId": "a49c5b1b-dc65-48f8-9225-afc436bd5f01"
 }

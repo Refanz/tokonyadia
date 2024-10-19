@@ -1,11 +1,8 @@
 package com.refanzzzz.tokonyadia.specification;
 
-import com.refanzzzz.tokonyadia.dto.request.TransactionRequest;
+import com.refanzzzz.tokonyadia.dto.request.transaction.TransactionRequest;
 import com.refanzzzz.tokonyadia.entity.Transaction;
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
-import jakarta.persistence.criteria.Root;
 import org.springframework.data.jpa.domain.Specification;
 
 import java.util.ArrayList;
