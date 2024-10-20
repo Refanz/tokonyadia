@@ -2,15 +2,15 @@ package com.refanzzzz.tokonyadia.controller;
 
 import org.springframework.http.ResponseEntity;
 
-public interface Controller<T, U> {
+public interface Controller<TResponse, TRequest> {
 
-    ResponseEntity<T> getAll(String query, Integer page, Integer size, String sort);
+    ResponseEntity<TResponse> getAll(String query, Integer page, Integer size, String sort);
 
-    ResponseEntity<T> getById(String id);
+    ResponseEntity<TResponse> getById(String id);
 
-    ResponseEntity<T> create(U request);
+    ResponseEntity<TResponse> create(TRequest request);
 
-    ResponseEntity<T> remove(String id);
+    ResponseEntity<TResponse> remove(String id);
 
-    ResponseEntity<T> update(String id, U request);
+    ResponseEntity<TResponse> update(String id, TRequest request);
 }

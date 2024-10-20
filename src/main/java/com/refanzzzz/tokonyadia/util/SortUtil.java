@@ -10,7 +10,6 @@ public class SortUtil {
             sortBy = sort.startsWith("-") ?
                     Sort.by(Sort.Direction.DESC, sort.substring(1)) :
                     Sort.by(Sort.Direction.ASC, sort);
-
         }
 
         return sortBy;

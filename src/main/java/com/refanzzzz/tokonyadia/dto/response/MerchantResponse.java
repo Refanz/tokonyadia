@@ -7,10 +7,10 @@ import lombok.*;
 @Setter
 @Getter
 @Builder
-public class TransactionDetailResponse {
+public class MerchantResponse {
     private String id;
-    private Long price;
-    private Integer qty;
-    private String productId;
-    private String transactionId;
+    private String name;
+    private String phoneNumber;
+    private String email;
+    private String userId;
 }

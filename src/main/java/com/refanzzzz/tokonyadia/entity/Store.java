@@ -27,6 +27,10 @@ public class Store extends BaseEntity {
     @Column(name = "address", nullable = false)
     private String address;
 
+    @OneToOne
+    @JoinColumn(name = "merchant_id")
+    private Merchant merchant;
+
     @OneToMany(targetEntity = Product.class, mappedBy = "store", fetch = FetchType.LAZY)
     private List<Product> productList;
 }

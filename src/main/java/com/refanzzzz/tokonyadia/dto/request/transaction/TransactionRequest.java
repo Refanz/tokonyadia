@@ -1,5 +1,6 @@
-package com.refanzzzz.tokonyadia.dto.request;
+package com.refanzzzz.tokonyadia.dto.request.transaction;
 
+import com.refanzzzz.tokonyadia.dto.request.SearchingPagingAndSortingRequest;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -11,7 +12,7 @@ import java.time.LocalDateTime;
 @Setter
 @SuperBuilder
 public class TransactionRequest extends SearchingPagingAndSortingRequest {
-    private LocalDateTime transactionDate;
+    private String transactionDate;
     private String customerId;
     private LocalDateTime minTransactionDate;
     private LocalDateTime maxTransactionDate;

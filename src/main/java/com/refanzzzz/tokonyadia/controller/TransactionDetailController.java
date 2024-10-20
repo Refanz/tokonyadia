@@ -1,8 +1,8 @@
 package com.refanzzzz.tokonyadia.controller;
 
-import com.refanzzzz.tokonyadia.dto.request.TransactionDetailRequest;
+import com.refanzzzz.tokonyadia.dto.request.transaction.TransactionDetailRequest;
 import com.refanzzzz.tokonyadia.dto.response.CommonResponse;
-import com.refanzzzz.tokonyadia.dto.response.TransactionDetailResponse;
+import com.refanzzzz.tokonyadia.dto.response.transaction.TransactionDetailResponse;
 import com.refanzzzz.tokonyadia.service.TransactionDetailService;
 import com.refanzzzz.tokonyadia.util.ResponseUtil;
 import lombok.AllArgsConstructor;

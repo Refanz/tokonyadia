@@ -1,4 +1,17 @@
-### Login
+### Login Customer
+POST {{localhost}}/auth/login
+Content-Type: application/json
+
+{
+  "username": "refanzzzz",
+  "password": "123"
+}
+
+> {%
+    client.global.set("access_token", response.body.data.accessToken);
+%}
+
+### Login Admin
 POST {{localhost}}/auth/login
 Content-Type: application/json
 
@@ -6,3 +19,7 @@ Content-Type: application/json
   "username": "admin",
   "password": "123"
 }
+
+> {%
+    client.global.set("access_token", response.body.data.accessToken);
+%}

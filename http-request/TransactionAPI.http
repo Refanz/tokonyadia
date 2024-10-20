@@ -1,22 +1,30 @@
-### GET All Transaction
-GET {{localhost}}/transaction
-
-### GET Transaction By ID
-GET {{localhost}}/transaction/f91b494d-d2fe-476b-8e18-0a62b9077374
-
-### POST Transaction
+### CREATE Transaction
 POST {{localhost}}/transaction
+Authorization: Bearer {{access_token}}
 Content-Type: application/json
 
 {
-  "customerId": "ffb57840-7b66-4ec4-925b-27e4fdc3d0c6"
+  "customerId": "aeb1417d-96b8-420b-98fe-6e4d63591ace"
 }
 
-### PUT Transaction
-PUT {{localhost}}/transaction/f91b494d-d2fe-476b-8e18-0a62b9077374
+### Add Item Transaction
+POST {{localhost}}/transaction/7bba7c22-af8d-46ba-98b6-8405612d58dc/items
+Authorization: Bearer {{access_token}}
 Content-Type: application/json
 
 {
-  "transactionDate": ""
+  "productId": "814da777-0306-4be4-9447-fdab86ef60d1",
+  "qty": 10
+}
+
+### Checkout
+POST {{localhost}}/transaction/checkout
+Authorization: Bearer {{access_token}}
+Content-Type: application/json
+
+{
+  "customerId": "aeb1417d-96b8-420b-98fe-6e4d63591ace",
+  "transactionId": "7bba7c22-af8d-46ba-98b6-8405612d58dc",
+  "storeId": "a49c5b1b-dc65-48f8-9225-afc436bd5f01"
 }
 

@@ -8,6 +8,7 @@ import com.refanzzzz.tokonyadia.entity.UserAccount;
 import com.refanzzzz.tokonyadia.repository.UserAccountRepository;
 import com.refanzzzz.tokonyadia.service.UserAccountService;
 import com.refanzzzz.tokonyadia.specification.UserAccountSpecification;
+import com.refanzzzz.tokonyadia.util.MapperUtil;
 import com.refanzzzz.tokonyadia.util.SortUtil;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
@@ -61,35 +62,42 @@ public class UserAccountImpl implements UserAccountService {
         Specification<UserAccount> specification = UserAccountSpecification.getUserAccountSpecification(request);
 
         Page<UserAccount> userAccounts = userAccountRepository.findAll(specification, pageable);
-        return userAccounts.map((this::toUserAccountResponse));
+        return userAccounts.map((MapperUtil::toUserAccountResponse));
     }
 
     @Override
     public UserAccountResponse getById(String id) {
-        return toUserAccountResponse(getOne(id));
+        return MapperUtil.toUserAccountResponse(getOne(id));
     }
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public UserAccountResponse create(UserAccountRequest data) {
+    public UserAccountResponse create(UserAccountRequest request) {
         try {
-
-            UserRole userRole = UserRole.getDescription(data.getRole());
+            UserRole userRole = UserRole.getDescription(request.getRole());
 
             if (userRole == null)
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND, "");
 
             UserAccount userAccount = UserAccount.builder()
-                    .username(data.getUsername())
-                    .password(passwordEncoder.encode(data.getPassword()))
+                    .username(request.getUsername())
+                    .password(passwordEncoder.encode(request.getPassword()))
                     .role(userRole)
                     .build();
 
             UserAccount saved = userAccountRepository.saveAndFlush(userAccount);
-            return toUserAccountResponse(saved);
+            return MapperUtil.toUserAccountResponse(saved);
         } catch (DataIntegrityViolationException e) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, Constant.ERROR_USERNAME_DUPLICATE);
         }
+    }
+
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public UserAccount create(UserAccount userAccount) {
+        userAccount.setPassword(passwordEncoder.encode(userAccount.getPassword()));
+        return userAccountRepository.saveAndFlush(userAccount);
     }
 
     @Override
@@ -104,22 +112,14 @@ public class UserAccountImpl implements UserAccountService {
     }
 
     @Override
-    public UserAccountResponse update(String id, UserAccountRequest data) {
+    public UserAccountResponse update(String id, UserAccountRequest request) {
         UserAccount userAccount = getOne(id);
-        userAccount.setUsername(data.getUsername());
-        userAccount.setPassword(data.getPassword());
-        userAccount.setRole(UserRole.getDescription(data.getRole()));
+        userAccount.setUsername(request.getUsername());
+        userAccount.setPassword(request.getPassword());
+        userAccount.setRole(UserRole.getDescription(request.getRole()));
 
         UserAccount updatedUserAccount = userAccountRepository.saveAndFlush(userAccount);
-        return toUserAccountResponse(updatedUserAccount);
-    }
-
-    private UserAccountResponse toUserAccountResponse(UserAccount userAccount) {
-        return UserAccountResponse.builder()
-                .id(userAccount.getId())
-                .username(userAccount.getUsername())
-                .role(userAccount.getRole().getDescription())
-                .build();
+        return MapperUtil.toUserAccountResponse(updatedUserAccount);
     }
 
     @Override

@@ -8,12 +8,15 @@ GET localhost:8081/api/customer/ffb57840-7b66-4ec4-925b-27e4fdc3d0c6
 ### POST Customer
 POST localhost:8081/api/customer
 Content-Type: application/json
+Authorization: Bearer {{access_token}}
 
 {
   "address": "Jalan",
-  "name":"Ayu",
-  "email": "ayu@gmail.com",
-  "phoneNumber": "0872622"
+  "name":"Refan",
+  "email": "refan@gmail.com",
+  "phoneNumber": "0872622",
+  "username": "refanzzzz",
+  "password": "123"
 }
 
 ### GET Customer

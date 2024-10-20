@@ -1,0 +1,37 @@
+### GET All Cart By Customer
+GET {{localhost}}/cart/aeb1417d-96b8-420b-98fe-6e4d63591ace
+Authorization: Bearer {{access_token}}
+
+### Create Cart
+POST {{localhost}}/cart
+Authorization: Bearer {{access_token}}
+Content-Type: application/json
+
+{
+  "customerId": "aeb1417d-96b8-420b-98fe-6e4d63591ace",
+  "storeId": "a36daac4-1912-4a08-9b50-7d12a6341c2b"
+}
+
+### Add Item Cart
+POST {{localhost}}/cart/07aed0a3-b02f-4bba-8a4a-cbee0980449c/items
+Authorization: Bearer {{access_token}}
+Content-Type: application/json
+
+{
+  "productId": "814da777-0306-4be4-9447-fdab86ef60d1",
+  "qty": 10
+}
+
+### Update Cart Item
+PUT {{localhost}}/cart/07aed0a3-b02f-4bba-8a4a-cbee0980449c/items
+Authorization: Bearer {{access_token}}
+Content-Type: application/json
+
+{
+  "qty": 20,
+  "cartDetailId": "dfa0e2a3-854f-45bb-a942-2173b4fbfae9"
+}
+
+### Delete Cart Item
+DELETE {{localhost}}/cart/07aed0a3-b02f-4bba-8a4a-cbee0980449c/items/ede65047-659d-486d-a6cc-3513166b60c0
+Authorization: Bearer {{access_token}}
