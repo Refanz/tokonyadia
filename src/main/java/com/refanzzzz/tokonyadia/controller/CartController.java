@@ -55,7 +55,7 @@ public class CartController {
     @PreAuthorize("hasRole('ROLE_CUSTOMER')")
     @PostMapping("/{id}/items")
     public ResponseEntity<CommonResponse<CartResponse>> addCartItem(@PathVariable String id, @RequestBody CartDetailRequest request) {
-        CartResponse cartResponse = cartService.addCartItem(request);
+        CartResponse cartResponse = cartService.addCartItem(id, request);
         return ResponseUtil.createResponse(HttpStatus.OK, "", cartResponse);
     }
 

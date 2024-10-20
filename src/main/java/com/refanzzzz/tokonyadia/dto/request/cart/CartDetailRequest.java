@@ -8,7 +8,6 @@ import lombok.*;
 @Getter
 @Builder
 public class CartDetailRequest {
-    private String cartId;
     private String productId;
     private Integer qty;
 }

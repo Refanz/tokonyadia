@@ -13,14 +13,13 @@ Content-Type: application/json
 }
 
 ### Add Item Cart
-POST {{localhost}}/cart/3e6c6c3c-15eb-4fbe-afd0-cf2654545807/items
+POST {{localhost}}/cart/07aed0a3-b02f-4bba-8a4a-cbee0980449c/items
 Authorization: Bearer {{access_token}}
 Content-Type: application/json
 
 {
-  "productId": "2f923d04-e30e-41cb-aba9-7b48531eff81",
-  "qty": 20,
-  "cartId": "3e6c6c3c-15eb-4fbe-afd0-cf2654545807"
+  "productId": "814da777-0306-4be4-9447-fdab86ef60d1",
+  "qty": 10
 }
 
 ### Update Cart Item

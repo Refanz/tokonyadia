@@ -1,13 +1,11 @@
 package com.refanzzzz.tokonyadia.service.impl;
 
 import com.refanzzzz.tokonyadia.constant.TransactionStatus;
+import com.refanzzzz.tokonyadia.dto.request.transaction.TransactionCheckoutRequest;
 import com.refanzzzz.tokonyadia.dto.request.transaction.TransactionDetailRequest;
 import com.refanzzzz.tokonyadia.dto.request.transaction.TransactionRequest;
 import com.refanzzzz.tokonyadia.dto.response.transaction.TransactionResponse;
-import com.refanzzzz.tokonyadia.entity.Customer;
-import com.refanzzzz.tokonyadia.entity.Product;
-import com.refanzzzz.tokonyadia.entity.Transaction;
-import com.refanzzzz.tokonyadia.entity.TransactionDetail;
+import com.refanzzzz.tokonyadia.entity.*;
 import com.refanzzzz.tokonyadia.repository.TransactionRepository;
 import com.refanzzzz.tokonyadia.service.CartService;
 import com.refanzzzz.tokonyadia.service.CustomerService;
@@ -28,6 +26,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -93,19 +92,34 @@ public class TransactionServiceImpl implements TransactionService {
         Transaction transaction = getOne(id);
         return MapperUtil.toTransactionResponse(transaction);
     }
-//
-//    @Transactional(rollbackFor = Exception.class)
-//    @Override
-//    public TransactionResponse checkoutTransaction(String transactionId) {
-//        cartService.
-//
-//        Transaction transaction = getOne(transactionId);
-//
-//
-//        return null;
-//    }
 
-//    private Transaction
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public TransactionResponse checkoutCart(TransactionCheckoutRequest request) {
+
+        Cart cart = cartService.getCartByStoreAndCustomer(request.getStoreId(), request.getCustomerId());
+        Transaction transaction = getOne(request.getTransactionId());
+
+        List<TransactionDetail> transactionDetails = new ArrayList<>();
+
+        for (CartDetail cartDetail : cart.getCartDetails()) {
+            if (cartDetail.getQty() > cartDetail.getProduct().getStock()) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The number of products you buy is more in stock");
+            } else {
+                transactionDetails.add(TransactionDetail.builder()
+                        .transaction(transaction)
+                        .qty(cartDetail.getQty())
+                        .product(cartDetail.getProduct())
+                        .price(cartDetail.getPrice())
+                        .build());
+            }
+        }
+
+        transaction.getTransactionDetails().addAll(transactionDetails);
+        transactionRepository.saveAndFlush(transaction);
+
+        return MapperUtil.toTransactionResponse(transaction);
+    }
 
     @Transactional(readOnly = true)
     @Override

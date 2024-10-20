@@ -1,6 +1,7 @@
 package com.refanzzzz.tokonyadia.controller;
 
 import com.refanzzzz.tokonyadia.constant.Constant;
+import com.refanzzzz.tokonyadia.dto.request.transaction.TransactionCheckoutRequest;
 import com.refanzzzz.tokonyadia.dto.request.transaction.TransactionDetailRequest;
 import com.refanzzzz.tokonyadia.dto.request.transaction.TransactionRequest;
 import com.refanzzzz.tokonyadia.dto.response.CommonResponse;
@@ -60,5 +61,12 @@ public class TransactionController {
     public ResponseEntity<CommonResponse<TransactionResponse>> addItemTransaction(@PathVariable String id, @RequestBody TransactionDetailRequest request) {
         TransactionResponse transactionResponse = transactionService.addTransactionItem(id, request);
         return ResponseUtil.createResponse(HttpStatus.CREATED, Constant.SUCCESS_ADD_ITEM_TRANSACTION, transactionResponse);
+    }
+
+    @PreAuthorize("hasRole('ROLE_CUSTOMER')")
+    @PostMapping("/checkout")
+    public ResponseEntity<?> checkoutCart(@RequestBody TransactionCheckoutRequest request) {
+        TransactionResponse transactionResponse = transactionService.checkoutCart(request);
+        return ResponseUtil.createResponse(HttpStatus.OK, "", transactionResponse);
     }
 }

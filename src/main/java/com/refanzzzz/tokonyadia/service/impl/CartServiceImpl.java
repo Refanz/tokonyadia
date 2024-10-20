@@ -7,7 +7,6 @@ import com.refanzzzz.tokonyadia.dto.request.cart.CartSearchRequest;
 import com.refanzzzz.tokonyadia.dto.request.cart.CartUpdateRequest;
 import com.refanzzzz.tokonyadia.dto.response.cart.CartResponse;
 import com.refanzzzz.tokonyadia.dto.response.cart.CartUpdateResponse;
-import com.refanzzzz.tokonyadia.dto.response.transaction.TransactionResponse;
 import com.refanzzzz.tokonyadia.entity.*;
 import com.refanzzzz.tokonyadia.repository.CartRepository;
 import com.refanzzzz.tokonyadia.service.CartService;
@@ -50,6 +49,14 @@ public class CartServiceImpl implements CartService {
         return cartPage.map(MapperUtil::toCartResponse);
     }
 
+    @Override
+    public Cart getCartByStoreAndCustomer(String storeId, String customerId) {
+        Store store = storeService.getOne(storeId);
+        Customer customer = customerService.getOne(customerId);
+
+        return cartRepository.getCartByStoreAndCustomer(store, customer);
+    }
+
     @Transactional(rollbackFor = Exception.class)
     @Override
     public CartResponse createCart(CartRequest request) {
@@ -68,8 +75,8 @@ public class CartServiceImpl implements CartService {
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public CartResponse addCartItem(CartDetailRequest request) {
-        Cart cart = getOne(request.getCartId());
+    public CartResponse addCartItem(String cartId, CartDetailRequest request) {
+        Cart cart = getOne(cartId);
         Product product = productService.getOne(request.getProductId());
 
         Optional<CartDetail> existingCartDetail = cart.getCartDetails().stream()
@@ -118,20 +125,6 @@ public class CartServiceImpl implements CartService {
         cartRepository.saveAndFlush(cart);
 
         return MapperUtil.toCartUpdateResponse(cart);
-    }
-
-    @Transactional(rollbackFor = Exception.class)
-    @Override
-    public TransactionResponse checkoutCart(Customer customer) {
-        Cart cart = cartRepository.getCartByCustomer(customer);
-
-        for (CartDetail cartDetail : cart.getCartDetails()) {
-            if (cartDetail.getQty() > cartDetail.getProduct().getStock()) {
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The number of products you buy is more in stock");
-            }
-        }
-
-        return null;
     }
 
     @Transactional(rollbackFor = Exception.class)

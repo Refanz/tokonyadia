@@ -25,11 +25,14 @@ public class Transaction extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private TransactionStatus transactionStatus;
 
+    @OneToOne(mappedBy = "transaction")
+    private Payment payment;
+
     @ManyToOne
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
-    @OneToMany(mappedBy = "transaction", cascade = CascadeType.MERGE)
+    @OneToMany(mappedBy = "transaction", cascade = CascadeType.ALL)
     private List<TransactionDetail> transactionDetails;
 
     @PrePersist
