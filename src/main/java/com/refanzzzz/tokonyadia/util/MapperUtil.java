@@ -134,5 +134,4 @@ public class MapperUtil {
                 .tokenSnap(payment.getTokenSnap())
                 .build();
     }
-
 }
