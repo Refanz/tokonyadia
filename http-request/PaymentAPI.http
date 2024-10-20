@@ -1,0 +1,8 @@
+### Create Payment Snap
+POST {{localhost}}/payment
+Authorization: Bearer {{access_token}}
+Content-Type: application/json
+
+{
+  "transactionId": "d60ddeaa-0f05-421b-a48b-c2e4ec5e5ef6"
+}

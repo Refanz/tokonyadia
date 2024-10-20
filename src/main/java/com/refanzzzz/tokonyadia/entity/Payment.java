@@ -27,7 +27,13 @@ public class Payment extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private PaymentStatus paymentStatus;
 
-    @OneToOne
+    @Column(name = "token_snap")
+    private String tokenSnap;
+
+    @Column(name = "redirect_url")
+    private String redirectUrl;
+
+    @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "transaction_id")
     private Transaction transaction;
 }

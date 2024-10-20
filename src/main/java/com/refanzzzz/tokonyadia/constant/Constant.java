@@ -10,6 +10,7 @@ public class Constant {
     public static final String AUTH_API = "/api/auth";
     public static final String CART_API = "/api/cart";
     public static final String LOGIN_API = AUTH_API + "/login";
+    public static final String PAYMENT_API = "/api/payment";
 
 
     public static final String SUCCESS_GET_ALL_CUSTOMER = "Successfully get all customer";
