@@ -36,11 +36,12 @@ public class SecurityConfiguration {
                 .sessionManagement(config -> config.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(request ->
                         request.dispatcherTypeMatchers(DispatcherType.ERROR).permitAll()
-                                .requestMatchers(HttpMethod.POST, "/api/payment/notification").permitAll()
+                                .requestMatchers(HttpMethod.POST, Constant.NOTIFICATION_API).permitAll()
                                 .requestMatchers(HttpMethod.POST, Constant.REFRESH_TOKEN_API).permitAll()
                                 .requestMatchers(HttpMethod.POST, Constant.LOGIN_API).permitAll()
                                 .requestMatchers(HttpMethod.POST, Constant.CUSTOMER_API).permitAll()
                                 .requestMatchers(HttpMethod.POST, Constant.MERCHANT_API).permitAll()
+                                .requestMatchers(HttpMethod.GET, Constant.IMAGE_API + "/**").permitAll()
                                 .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)

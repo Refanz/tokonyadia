@@ -15,7 +15,8 @@ public class Constant {
     public static final String LOGIN_API = AUTH_API + "/login";
     public static final String REFRESH_TOKEN_API = AUTH_API + "/refresh-token";
     public static final String PAYMENT_API = "/api/payment";
-
+    public static final String IMAGE_API = "/api/images";
+    public static final String NOTIFICATION_API = PAYMENT_API + "/notification";
 
     public static final String SUCCESS_GET_ALL_CUSTOMER = "Successfully get all customer";
     public static final String SUCCESS_GET_CUSTOMER = "Successfully get customer by id";

@@ -5,5 +5,5 @@ Content-Type: application/json
 {
   "username": "refandas",
   "password": "123",
-  "role": "Super Admin"
+  "role": "Merchant"
 }
