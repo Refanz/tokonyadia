@@ -1,5 +1,7 @@
 package com.refanzzzz.tokonyadia.security;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.refanzzzz.tokonyadia.dto.response.CommonResponse;
 import com.refanzzzz.tokonyadia.entity.UserAccount;
 import com.refanzzzz.tokonyadia.service.JwtService;
 import com.refanzzzz.tokonyadia.service.UserAccountService;
@@ -12,6 +14,8 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
@@ -27,6 +31,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtService jwtService;
     private final UserAccountService userAccountService;
+    private final ObjectMapper objectMapper;
 
     @Override
     protected void doFilterInternal(
@@ -38,10 +43,25 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             String token = JwtUtil.parseJwtToken(bearerToken);
 
             if (token != null) {
+
+                if (jwtService.isTokenBlacklisted(token)) {
+                    CommonResponse<?> commonResponse = new CommonResponse<>(
+                            HttpStatus.UNAUTHORIZED.value(),
+                            "Unauthorized",
+                            null,
+                            null
+                    );
+
+                    String stringJson = objectMapper.writeValueAsString(commonResponse);
+                    response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                    response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+                    response.getWriter().write(stringJson);
+
+                    return;
+                }
+
                 String userId = jwtService.getUserId(token);
-
                 UserAccount userAccount = userAccountService.getOne(userId);
-
                 UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
                         userAccount,
                         null,

@@ -1,6 +1,9 @@
 package com.refanzzzz.tokonyadia.constant;
 
 public class Constant {
+
+    public static final String REFRESH_TOKEN_COOKIE_NAME = "refreshToken";
+
     public static final String TRANSACTION_API = "/api/transaction";
     public static final String PRODUCT_API = "/api/product";
     public static final String CUSTOMER_API = "/api/customer";
@@ -10,6 +13,8 @@ public class Constant {
     public static final String AUTH_API = "/api/auth";
     public static final String CART_API = "/api/cart";
     public static final String LOGIN_API = AUTH_API + "/login";
+    public static final String REFRESH_TOKEN_API = AUTH_API + "/refresh-token";
+    public static final String PAYMENT_API = "/api/payment";
 
 
     public static final String SUCCESS_GET_ALL_CUSTOMER = "Successfully get all customer";

@@ -125,4 +125,13 @@ public class MapperUtil {
                 .build();
     }
 
+    public static PaymentResponse toPaymentResponse(Payment payment) {
+        return PaymentResponse.builder()
+                .transactionId(payment.getTransaction().getId())
+                .paymentStatus(payment.getPaymentStatus().name())
+                .amount(payment.getAmount())
+                .redirectUrl(payment.getRedirectUrl())
+                .tokenSnap(payment.getTokenSnap())
+                .build();
+    }
 }

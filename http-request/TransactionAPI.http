@@ -8,7 +8,7 @@ Content-Type: application/json
 }
 
 ### Add Item Transaction
-POST {{localhost}}/transaction/7bba7c22-af8d-46ba-98b6-8405612d58dc/items
+POST {{localhost}}/transaction/d60ddeaa-0f05-421b-a48b-c2e4ec5e5ef6/items
 Authorization: Bearer {{access_token}}
 Content-Type: application/json
 
@@ -24,7 +24,9 @@ Content-Type: application/json
 
 {
   "customerId": "aeb1417d-96b8-420b-98fe-6e4d63591ace",
-  "transactionId": "7bba7c22-af8d-46ba-98b6-8405612d58dc",
+  "transactionId": "d60ddeaa-0f05-421b-a48b-c2e4ec5e5ef6",
   "storeId": "a49c5b1b-dc65-48f8-9225-afc436bd5f01"
 }
+
+
 

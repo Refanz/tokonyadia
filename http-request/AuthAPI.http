@@ -23,3 +23,11 @@ Content-Type: application/json
 > {%
     client.global.set("access_token", response.body.data.accessToken);
 %}
+
+### Refresh Token
+POST {{localhost}}/auth/refresh-token
+
+### Logout
+POST {{localhost}}/auth/logout
+Authorization: Bearer {{access_token}}
+
