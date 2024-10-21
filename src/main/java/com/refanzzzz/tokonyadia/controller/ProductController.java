@@ -6,6 +6,7 @@ import com.refanzzzz.tokonyadia.dto.response.CommonResponse;
 import com.refanzzzz.tokonyadia.dto.response.ProductResponse;
 import com.refanzzzz.tokonyadia.service.ProductService;
 import com.refanzzzz.tokonyadia.util.ResponseUtil;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -21,6 +22,7 @@ import static com.refanzzzz.tokonyadia.constant.Constant.PRODUCT_API;
 @RestController
 @RequestMapping(path = PRODUCT_API)
 @AllArgsConstructor
+@Tag(name = "Product", description = "APIs for Product")
 public class ProductController {
 
     private ProductService productService;

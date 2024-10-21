@@ -6,6 +6,7 @@ import com.refanzzzz.tokonyadia.dto.response.CommonResponse;
 import com.refanzzzz.tokonyadia.dto.response.CustomerResponse;
 import com.refanzzzz.tokonyadia.service.CustomerService;
 import com.refanzzzz.tokonyadia.util.ResponseUtil;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.apache.tomcat.util.bcel.Const;
 import org.springframework.data.domain.Page;
@@ -19,6 +20,7 @@ import static com.refanzzzz.tokonyadia.constant.Constant.CUSTOMER_API;
 @RestController
 @RequestMapping(CUSTOMER_API)
 @AllArgsConstructor
+@Tag(name = "Customer", description = "APIs for Customer")
 public class CustomerController implements Controller<CommonResponse<CustomerResponse>, CustomerRequest> {
 
     private CustomerService customerService;

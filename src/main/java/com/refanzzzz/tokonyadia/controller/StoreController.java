@@ -5,6 +5,7 @@ import com.refanzzzz.tokonyadia.dto.response.CommonResponse;
 import com.refanzzzz.tokonyadia.dto.response.StoreResponse;
 import com.refanzzzz.tokonyadia.service.StoreService;
 import com.refanzzzz.tokonyadia.util.ResponseUtil;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,7 @@ import static com.refanzzzz.tokonyadia.constant.Constant.STORE_API;
 @RestController
 @RequestMapping(STORE_API)
 @AllArgsConstructor
+@Tag(name = "Store", description = "APIs for Store")
 public class StoreController implements Controller<CommonResponse<StoreResponse>, StoreRequest> {
 
     private StoreService storeService;

@@ -7,6 +7,7 @@ import com.refanzzzz.tokonyadia.dto.response.CommonResponse;
 import com.refanzzzz.tokonyadia.dto.response.MerchantResponse;
 import com.refanzzzz.tokonyadia.service.MerchantService;
 import com.refanzzzz.tokonyadia.util.ResponseUtil;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(path = Constant.MERCHANT_API)
 @RequiredArgsConstructor
+@Tag(name = "Merchant", description = "APIs for Merchant")
 public class MerchantController implements Controller<CommonResponse<MerchantResponse>, MerchantRequest> {
 
     private final MerchantService merchantService;

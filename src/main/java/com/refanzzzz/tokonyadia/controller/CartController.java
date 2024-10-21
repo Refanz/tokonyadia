@@ -10,6 +10,7 @@ import com.refanzzzz.tokonyadia.dto.response.cart.CartResponse;
 import com.refanzzzz.tokonyadia.dto.response.cart.CartUpdateResponse;
 import com.refanzzzz.tokonyadia.service.CartService;
 import com.refanzzzz.tokonyadia.util.ResponseUtil;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(path = Constant.CART_API)
 @RequiredArgsConstructor
+@Tag(name = "Cart", description = "APIs for Cart")
 public class CartController {
 
     private final CartService cartService;

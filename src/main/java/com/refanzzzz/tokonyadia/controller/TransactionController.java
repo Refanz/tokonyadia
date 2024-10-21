@@ -8,6 +8,7 @@ import com.refanzzzz.tokonyadia.dto.response.CommonResponse;
 import com.refanzzzz.tokonyadia.dto.response.transaction.TransactionResponse;
 import com.refanzzzz.tokonyadia.service.TransactionService;
 import com.refanzzzz.tokonyadia.util.ResponseUtil;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -20,6 +21,7 @@ import static com.refanzzzz.tokonyadia.constant.Constant.TRANSACTION_API;
 @RestController
 @RequestMapping(TRANSACTION_API)
 @AllArgsConstructor
+@Tag(name = "Transaction", description = "APIs for Transaction")
 public class TransactionController {
 
     private TransactionService transactionService;

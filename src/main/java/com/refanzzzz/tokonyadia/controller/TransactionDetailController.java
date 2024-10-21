@@ -5,6 +5,7 @@ import com.refanzzzz.tokonyadia.dto.response.CommonResponse;
 import com.refanzzzz.tokonyadia.dto.response.transaction.TransactionDetailResponse;
 import com.refanzzzz.tokonyadia.service.TransactionDetailService;
 import com.refanzzzz.tokonyadia.util.ResponseUtil;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,7 @@ import static com.refanzzzz.tokonyadia.constant.Constant.TRANSACTION_DETAIL_API;
 @RestController
 @RequestMapping(TRANSACTION_DETAIL_API)
 @AllArgsConstructor
+@Tag(name = "Transaction Detail", description = "APIs for Transaction Detail")
 public class TransactionDetailController implements Controller<CommonResponse<TransactionDetailResponse>, TransactionDetailRequest> {
 
     private TransactionDetailService transactionDetailService;

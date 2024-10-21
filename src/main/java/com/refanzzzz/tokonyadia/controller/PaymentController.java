@@ -6,6 +6,7 @@ import com.refanzzzz.tokonyadia.dto.request.PaymentRequest;
 import com.refanzzzz.tokonyadia.dto.response.PaymentResponse;
 import com.refanzzzz.tokonyadia.service.PaymentService;
 import com.refanzzzz.tokonyadia.util.ResponseUtil;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(Constant.PAYMENT_API)
 @RequiredArgsConstructor
+@Tag(name = "Payment", description = "APIs for Payment")
 public class PaymentController {
 
     private final PaymentService paymentService;

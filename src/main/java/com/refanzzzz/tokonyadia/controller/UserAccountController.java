@@ -6,6 +6,7 @@ import com.refanzzzz.tokonyadia.dto.response.CommonResponse;
 import com.refanzzzz.tokonyadia.dto.response.UserAccountResponse;
 import com.refanzzzz.tokonyadia.service.UserAccountService;
 import com.refanzzzz.tokonyadia.util.ResponseUtil;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(path = Constant.USER_ACCOUNT_API)
 @RequiredArgsConstructor
+@Tag(name = "User Account", description = "APIs for User Account")
 public class UserAccountController implements Controller<CommonResponse<UserAccountResponse>, UserAccountRequest> {
 
     private final UserAccountService userAccountService;

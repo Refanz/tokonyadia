@@ -3,6 +3,7 @@ package com.refanzzzz.tokonyadia.controller;
 import com.refanzzzz.tokonyadia.constant.Constant;
 import com.refanzzzz.tokonyadia.dto.response.file.FileDownloadResponse;
 import com.refanzzzz.tokonyadia.service.ProductImageService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(path = Constant.IMAGE_API)
 @RequiredArgsConstructor
+@Tag(name = "File", description = "APIs for File")
 public class FileController {
 
     private final ProductImageService productImageService;

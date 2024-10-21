@@ -6,6 +6,7 @@ import com.refanzzzz.tokonyadia.dto.response.CommonResponse;
 import com.refanzzzz.tokonyadia.dto.response.AuthResponse;
 import com.refanzzzz.tokonyadia.service.AuthService;
 import com.refanzzzz.tokonyadia.util.ResponseUtil;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -25,6 +26,7 @@ import java.util.Arrays;
 @RestController
 @RequestMapping(path = Constant.AUTH_API)
 @RequiredArgsConstructor
+@Tag(name = "Authentication", description = "APIs for user authentication, token refresh, and logout")
 public class AuthController {
 
     @Value("${tokonyadia.refresh-token-expiration-in-hour}")
