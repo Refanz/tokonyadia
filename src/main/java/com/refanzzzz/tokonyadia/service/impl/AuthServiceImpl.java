@@ -7,6 +7,7 @@ import com.refanzzzz.tokonyadia.service.AuthService;
 import com.refanzzzz.tokonyadia.service.JwtService;
 import com.refanzzzz.tokonyadia.service.RefreshTokenService;
 import com.refanzzzz.tokonyadia.service.UserAccountService;
+import com.refanzzzz.tokonyadia.util.AuthValidationUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -22,9 +23,12 @@ public class AuthServiceImpl implements AuthService {
     private final UserAccountService userAccountService;
     private final RefreshTokenService refreshTokenService;
     private final AuthenticationManager authenticationManager;
+    private final AuthValidationUtil authValidationUtil;
 
     @Override
     public AuthResponse login(LoginRequest loginRequest) {
+        authValidationUtil.validate(loginRequest);
+
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
 

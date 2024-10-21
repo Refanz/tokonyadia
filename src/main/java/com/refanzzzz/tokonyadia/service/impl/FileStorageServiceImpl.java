@@ -3,7 +3,10 @@ package com.refanzzzz.tokonyadia.service.impl;
 import com.refanzzzz.tokonyadia.constant.FileType;
 import com.refanzzzz.tokonyadia.dto.response.file.FileInfo;
 import com.refanzzzz.tokonyadia.service.FileStorageService;
+import com.refanzzzz.tokonyadia.util.ImageUtil;
 import jakarta.annotation.PostConstruct;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -21,18 +24,18 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
+@RequiredArgsConstructor
 public class FileStorageServiceImpl implements FileStorageService {
 
-    private final Integer maxFileSize;
-
     private final Path rootPathDirectory;
+    private final ImageUtil imageUtil;
 
+    @Autowired
     public FileStorageServiceImpl(
-            @Value("${tokonyadia.file-max-size}") Integer maxSize,
-            @Value("${tokonyadia.root-path-directory}") String pathDirectory
-    ) {
-        this.maxFileSize = maxSize;
+            @Value("${tokonyadia.root-path-directory}") String pathDirectory,
+            ImageUtil imageUtil) {
         this.rootPathDirectory = Paths.get(pathDirectory).normalize();
+        this.imageUtil = imageUtil;
     }
 
     @PostConstruct
@@ -50,6 +53,8 @@ public class FileStorageServiceImpl implements FileStorageService {
     @Override
     public FileInfo storeFile(FileType fileType, String prefixDirectory, MultipartFile multipartFile, List<String> contentType) {
         try {
+            imageUtil.validateImage(multipartFile);
+
             String prefix = fileType.equals(FileType.FILE) ? "files" : "images";
             String filename = UUID.randomUUID() + "_" + multipartFile.getOriginalFilename();
 

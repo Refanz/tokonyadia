@@ -25,11 +25,12 @@ public class ProductImageServiceImpl implements ProductImageService {
 
     private final ProductImageRepository productImageRepository;
     private final FileStorageService fileStorageService;
+    private final ImageUtil imageUtil;
 
     @Transactional(rollbackFor = Exception.class)
     @Override
     public ProductImage create(MultipartFile multipartFile, Product product) {
-        FileInfo fileInfo = fileStorageService.storeFile(FileType.IMAGE, "menu", multipartFile, ImageUtil.getImageContentTypes());
+        FileInfo fileInfo = fileStorageService.storeFile(FileType.IMAGE, "menu", multipartFile, imageUtil.getImageContentTypes());
         ProductImage productImage = ProductImage.builder()
                 .path(fileInfo.getPath())
                 .contentType(multipartFile.getContentType())
@@ -51,7 +52,7 @@ public class ProductImageServiceImpl implements ProductImageService {
     @Override
     public ProductImage update(String productImageId, MultipartFile multipartFile) {
         ProductImage productImage = findProductImageById(productImageId);
-        FileInfo fileInfo = fileStorageService.storeFile(FileType.IMAGE, "menu", multipartFile, ImageUtil.getImageContentTypes());
+        FileInfo fileInfo = fileStorageService.storeFile(FileType.IMAGE, "menu", multipartFile, imageUtil.getImageContentTypes());
 
         fileStorageService.deleteFile(productImage.getPath());
         productImage.setPath(fileInfo.getPath());

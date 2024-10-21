@@ -4,6 +4,11 @@ GET localhost:8081/api/product
 ### GET Product
 GET localhost:8081/api/product?sortBy=name
 
+### GET Product By ID
+GET {{localhost}}/product/hdhdhdhhdhd
+Authorization: Bearer {{access_token}}
+
+
 ### POST Product
 POST localhost:8081/api/product
 Authorization: Bearer {{access_token}}
