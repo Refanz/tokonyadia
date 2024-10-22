@@ -1,6 +1,6 @@
 package com.refanzzzz.tokonyadia.service;
 
-import com.refanzzzz.tokonyadia.dto.request.Midtrans.MidtransNotificationRequest;
+import com.refanzzzz.tokonyadia.dto.request.midtrans.MidtransNotificationRequest;
 import com.refanzzzz.tokonyadia.dto.request.PaymentRequest;
 import com.refanzzzz.tokonyadia.dto.response.PaymentResponse;
 

@@ -1,7 +1,7 @@
 package com.refanzzzz.tokonyadia.service;
 
-import com.refanzzzz.tokonyadia.dto.request.LoginRequest;
-import com.refanzzzz.tokonyadia.dto.response.AuthResponse;
+import com.refanzzzz.tokonyadia.dto.request.auth.LoginRequest;
+import com.refanzzzz.tokonyadia.dto.response.auth.AuthResponse;
 
 public interface AuthService {
     AuthResponse login(LoginRequest loginRequest);

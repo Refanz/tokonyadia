@@ -1,9 +1,9 @@
 package com.refanzzzz.tokonyadia.controller;
 
 import com.refanzzzz.tokonyadia.constant.Constant;
-import com.refanzzzz.tokonyadia.dto.request.UserAccountRequest;
+import com.refanzzzz.tokonyadia.dto.request.auth.UserAccountRequest;
 import com.refanzzzz.tokonyadia.dto.response.CommonResponse;
-import com.refanzzzz.tokonyadia.dto.response.UserAccountResponse;
+import com.refanzzzz.tokonyadia.dto.response.auth.UserAccountResponse;
 import com.refanzzzz.tokonyadia.service.UserAccountService;
 import com.refanzzzz.tokonyadia.util.ResponseUtil;
 import io.swagger.v3.oas.annotations.tags.Tag;

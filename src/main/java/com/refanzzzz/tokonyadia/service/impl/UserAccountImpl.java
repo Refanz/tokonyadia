@@ -2,8 +2,8 @@ package com.refanzzzz.tokonyadia.service.impl;
 
 import com.refanzzzz.tokonyadia.constant.Constant;
 import com.refanzzzz.tokonyadia.constant.UserRole;
-import com.refanzzzz.tokonyadia.dto.request.UserAccountRequest;
-import com.refanzzzz.tokonyadia.dto.response.UserAccountResponse;
+import com.refanzzzz.tokonyadia.dto.request.auth.UserAccountRequest;
+import com.refanzzzz.tokonyadia.dto.response.auth.UserAccountResponse;
 import com.refanzzzz.tokonyadia.entity.UserAccount;
 import com.refanzzzz.tokonyadia.repository.UserAccountRepository;
 import com.refanzzzz.tokonyadia.service.UserAccountService;

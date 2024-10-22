@@ -1,6 +1,6 @@
 package com.refanzzzz.tokonyadia.specification;
 
-import com.refanzzzz.tokonyadia.dto.request.UserAccountRequest;
+import com.refanzzzz.tokonyadia.dto.request.auth.UserAccountRequest;
 import com.refanzzzz.tokonyadia.entity.UserAccount;
 import jakarta.persistence.criteria.Predicate;
 import org.springframework.data.jpa.domain.Specification;

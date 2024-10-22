@@ -1,7 +1,7 @@
 package com.refanzzzz.tokonyadia.service;
 
-import com.refanzzzz.tokonyadia.dto.request.UserAccountRequest;
-import com.refanzzzz.tokonyadia.dto.response.UserAccountResponse;
+import com.refanzzzz.tokonyadia.dto.request.auth.UserAccountRequest;
+import com.refanzzzz.tokonyadia.dto.response.auth.UserAccountResponse;
 import com.refanzzzz.tokonyadia.entity.UserAccount;
 import org.springframework.security.core.userdetails.UserDetailsService;
 

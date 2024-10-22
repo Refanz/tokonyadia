@@ -1,6 +1,6 @@
 package com.refanzzzz.tokonyadia.client;
 
-import com.refanzzzz.tokonyadia.dto.request.Midtrans.MidtransPaymentRequest;
+import com.refanzzzz.tokonyadia.dto.request.midtrans.MidtransPaymentRequest;
 import com.refanzzzz.tokonyadia.dto.response.MidtransSnapResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.HttpHeaders;

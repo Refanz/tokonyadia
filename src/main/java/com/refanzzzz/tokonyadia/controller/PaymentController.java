@@ -1,7 +1,7 @@
 package com.refanzzzz.tokonyadia.controller;
 
 import com.refanzzzz.tokonyadia.constant.Constant;
-import com.refanzzzz.tokonyadia.dto.request.Midtrans.MidtransNotificationRequest;
+import com.refanzzzz.tokonyadia.dto.request.midtrans.MidtransNotificationRequest;
 import com.refanzzzz.tokonyadia.dto.request.PaymentRequest;
 import com.refanzzzz.tokonyadia.dto.response.PaymentResponse;
 import com.refanzzzz.tokonyadia.service.PaymentService;

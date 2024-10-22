@@ -1,4 +1,4 @@
-package com.refanzzzz.tokonyadia.dto.response;
+package com.refanzzzz.tokonyadia.dto.response.auth;
 
 import lombok.*;
 

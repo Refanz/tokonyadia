@@ -1,4 +1,4 @@
-package com.refanzzzz.tokonyadia.dto.request.Midtrans;
+package com.refanzzzz.tokonyadia.dto.request.midtrans;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
