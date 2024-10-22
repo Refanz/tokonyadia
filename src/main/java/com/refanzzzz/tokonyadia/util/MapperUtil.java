@@ -6,6 +6,7 @@ import com.refanzzzz.tokonyadia.dto.response.cart.CartDetailResponse;
 import com.refanzzzz.tokonyadia.dto.response.cart.CartResponse;
 import com.refanzzzz.tokonyadia.dto.response.cart.CartUpdateResponse;
 import com.refanzzzz.tokonyadia.dto.response.transaction.TransactionDetailResponse;
+import com.refanzzzz.tokonyadia.dto.response.transaction.TransactionItemRequest;
 import com.refanzzzz.tokonyadia.dto.response.transaction.TransactionResponse;
 import com.refanzzzz.tokonyadia.entity.*;
 
@@ -133,6 +134,15 @@ public class MapperUtil {
                 .amount(payment.getAmount())
                 .redirectUrl(payment.getRedirectUrl())
                 .tokenSnap(payment.getTokenSnap())
+                .build();
+    }
+
+    public static TransactionDetailResponse toTransactionDetail(TransactionItemRequest transactionItemRequest) {
+        return TransactionDetailResponse.builder()
+                .productId(transactionItemRequest.getProductId())
+                .transactionId(transactionItemRequest.getTransactionId())
+                .qty(transactionItemRequest.getQty())
+                .price(transactionItemRequest.getPrice())
                 .build();
     }
 }

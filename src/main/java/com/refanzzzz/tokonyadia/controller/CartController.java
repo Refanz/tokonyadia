@@ -8,6 +8,7 @@ import com.refanzzzz.tokonyadia.dto.request.cart.CartUpdateRequest;
 import com.refanzzzz.tokonyadia.dto.response.CommonResponse;
 import com.refanzzzz.tokonyadia.dto.response.cart.CartResponse;
 import com.refanzzzz.tokonyadia.dto.response.cart.CartUpdateResponse;
+import com.refanzzzz.tokonyadia.dto.response.cart.CartCheckoutResponse;
 import com.refanzzzz.tokonyadia.service.CartService;
 import com.refanzzzz.tokonyadia.util.ResponseUtil;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -73,5 +74,12 @@ public class CartController {
     public ResponseEntity<?> deleteCartItem(@PathVariable String cartId, @PathVariable String cartItemId) {
         cartService.deleteCartItem(cartId, cartItemId);
         return ResponseUtil.createResponse(HttpStatus.OK, "", null);
+    }
+
+    @PreAuthorize("hasRole('ROLE_CUSTOMER')")
+    @PostMapping("/{id}/checkout")
+    public ResponseEntity<?> checkoutCart(@PathVariable String id) {
+        CartCheckoutResponse cartCheckoutResponse = cartService.checkoutCart(id);
+        return ResponseUtil.createResponse(HttpStatus.OK, "", cartCheckoutResponse);
     }
 }

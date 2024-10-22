@@ -1,9 +1,9 @@
 package com.refanzzzz.tokonyadia.controller;
 
 import com.refanzzzz.tokonyadia.constant.Constant;
-import com.refanzzzz.tokonyadia.dto.request.transaction.TransactionCheckoutRequest;
+import com.refanzzzz.tokonyadia.dto.request.transaction.TransactionCreateRequest;
 import com.refanzzzz.tokonyadia.dto.request.transaction.TransactionDetailRequest;
-import com.refanzzzz.tokonyadia.dto.request.transaction.TransactionRequest;
+import com.refanzzzz.tokonyadia.dto.request.transaction.TransactionSearchRequest;
 import com.refanzzzz.tokonyadia.dto.response.CommonResponse;
 import com.refanzzzz.tokonyadia.dto.response.transaction.TransactionResponse;
 import com.refanzzzz.tokonyadia.service.TransactionService;
@@ -33,7 +33,7 @@ public class TransactionController {
             @RequestParam(name = "size", required = false, defaultValue = "10") Integer size,
             @RequestParam(name = "sortBy", required = false) String sort) {
 
-        TransactionRequest transactionRequest = TransactionRequest
+        TransactionSearchRequest transactionRequest = TransactionSearchRequest
                 .builder()
                 .query(query)
                 .page(page)
@@ -53,8 +53,8 @@ public class TransactionController {
 
     @PreAuthorize("hasRole('ROLE_CUSTOMER')")
     @PostMapping
-    public ResponseEntity<CommonResponse<TransactionResponse>> create(@RequestBody TransactionRequest request) {
-        TransactionResponse transactionResponse = transactionService.createTransaction(request);
+    public ResponseEntity<CommonResponse<TransactionResponse>> create(@RequestBody TransactionCreateRequest request) {
+        TransactionResponse transactionResponse = transactionService.createCustomerTransaction(request);
         return ResponseUtil.createResponse(HttpStatus.CREATED, Constant.SUCCESS_CREATE_TRANSACTION, transactionResponse);
     }
 
@@ -63,12 +63,5 @@ public class TransactionController {
     public ResponseEntity<CommonResponse<TransactionResponse>> addItemTransaction(@PathVariable String id, @RequestBody TransactionDetailRequest request) {
         TransactionResponse transactionResponse = transactionService.addTransactionItem(id, request);
         return ResponseUtil.createResponse(HttpStatus.CREATED, Constant.SUCCESS_ADD_ITEM_TRANSACTION, transactionResponse);
-    }
-
-    @PreAuthorize("hasRole('ROLE_CUSTOMER')")
-    @PostMapping("/checkout")
-    public ResponseEntity<?> checkoutCart(@RequestBody TransactionCheckoutRequest request) {
-        TransactionResponse transactionResponse = transactionService.checkoutCart(request);
-        return ResponseUtil.createResponse(HttpStatus.OK, "", transactionResponse);
     }
 }

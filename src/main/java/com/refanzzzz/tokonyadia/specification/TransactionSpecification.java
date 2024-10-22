@@ -1,6 +1,6 @@
 package com.refanzzzz.tokonyadia.specification;
 
-import com.refanzzzz.tokonyadia.dto.request.transaction.TransactionRequest;
+import com.refanzzzz.tokonyadia.dto.request.transaction.TransactionSearchRequest;
 import com.refanzzzz.tokonyadia.entity.Transaction;
 import jakarta.persistence.criteria.Predicate;
 import org.springframework.data.jpa.domain.Specification;
@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TransactionSpecification {
-    public static Specification<Transaction> getTransactionSpecification(TransactionRequest request) {
+    public static Specification<Transaction> getTransactionSpecification(TransactionSearchRequest request) {
         return (root, query, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();
 

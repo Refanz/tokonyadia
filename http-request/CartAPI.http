@@ -13,12 +13,12 @@ Content-Type: application/json
 }
 
 ### Add Item Cart
-POST {{localhost}}/cart/07aed0a3-b02f-4bba-8a4a-cbee0980449c/items
+POST {{localhost}}/cart/18a5716b-346f-491c-a506-348a541741d6/items
 Authorization: Bearer {{access_token}}
 Content-Type: application/json
 
 {
-  "productId": "814da777-0306-4be4-9447-fdab86ef60d1",
+  "productId": "2f923d04-e30e-41cb-aba9-7b48531eff81",
   "qty": 10
 }
 

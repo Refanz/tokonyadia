@@ -1,19 +1,20 @@
 package com.refanzzzz.tokonyadia.dto.request.transaction;
 
 import com.refanzzzz.tokonyadia.dto.request.SearchingPagingAndSortingRequest;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
 @Setter
+@Getter
 @SuperBuilder
-public class TransactionRequest extends SearchingPagingAndSortingRequest {
-    private String transactionDate;
-    private String customerId;
+public class TransactionSearchRequest extends SearchingPagingAndSortingRequest {
     private LocalDateTime minTransactionDate;
     private LocalDateTime maxTransactionDate;
 }

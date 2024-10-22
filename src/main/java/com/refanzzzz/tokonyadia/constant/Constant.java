@@ -25,6 +25,8 @@ public class Constant {
     public static final String SUCCESS_CREATE_CUSTOMER = "Successfully create customer";
     public static final String ERROR_GET_CUSTOMER = "Customer is not found!";
 
+    public static final String ERROR_CART_CHECKOUT = "Cart has been checked out!";
+
     public static final String SUCCESS_CREATE_TRANSACTION = "Successfully create transaction";
 
     public static final String ERROR_USERNAME_DUPLICATE = "Username has been registered!";
@@ -33,4 +35,5 @@ public class Constant {
 
     public static final String SUCCESS_ADD_ITEM_TRANSACTION = "Successfully add item to transaction";
     public static final String ERROR_GET_CART = "Cart is not found!";
+    public static final String ERROR_PRODUCT_QTY = "The number of products you buy is more in stock";
 }

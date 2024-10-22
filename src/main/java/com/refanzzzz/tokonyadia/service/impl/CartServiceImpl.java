@@ -7,6 +7,7 @@ import com.refanzzzz.tokonyadia.dto.request.cart.CartSearchRequest;
 import com.refanzzzz.tokonyadia.dto.request.cart.CartUpdateRequest;
 import com.refanzzzz.tokonyadia.dto.response.cart.CartResponse;
 import com.refanzzzz.tokonyadia.dto.response.cart.CartUpdateResponse;
+import com.refanzzzz.tokonyadia.dto.response.cart.CartCheckoutResponse;
 import com.refanzzzz.tokonyadia.entity.*;
 import com.refanzzzz.tokonyadia.repository.CartRepository;
 import com.refanzzzz.tokonyadia.service.CartService;
@@ -36,6 +37,27 @@ public class CartServiceImpl implements CartService {
     private final StoreService storeService;
     private final ProductService productService;
     private final CustomerService customerService;
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public CartCheckoutResponse checkoutCart(String id) {
+        Cart cart = getOne(id);
+
+        if (cart.getIsCheckout())
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, Constant.ERROR_CART_CHECKOUT);
+
+        cart.getCartDetails().forEach(this::checkAvailableStock);
+
+        cart.setIsCheckout(true);
+
+        cartRepository.saveAndFlush(cart);
+
+        return CartCheckoutResponse.builder()
+                .storeId(cart.getStore().getId())
+                .customerId(cart.getCustomer().getId())
+                .cartDetails(cart.getCartDetails().stream().map(MapperUtil::toCardDetailResponse).toList())
+                .build();
+    }
 
     @Override
     public Page<CartResponse> getAllCartByCustomer(CartSearchRequest request) {
@@ -135,5 +157,10 @@ public class CartServiceImpl implements CartService {
         cart.getCartDetails().removeIf(item -> item.getId().equals(cartDetailId));
 
         cartRepository.saveAndFlush(cart);
+    }
+
+    private void checkAvailableStock(CartDetail cartItem) {
+        if (cartItem.getQty() > cartItem.getProduct().getStock())
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, Constant.ERROR_PRODUCT_QTY);
     }
 }

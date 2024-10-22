@@ -109,8 +109,6 @@ class AuthServiceImplTest {
         UserAccount userAccount = new UserAccount();
         userAccount.setId("aaaaawddd");
 
-        Mockito.doNothing()
-
-
+        Mockito.doNothing();
     }
 }

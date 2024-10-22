@@ -18,6 +18,9 @@ import java.util.List;
 @Table(name = "t_cart")
 public class Cart extends BaseEntity {
 
+    @Column(name = "is_checkout")
+    private Boolean isCheckout;
+
     @ManyToOne
     @JoinColumn(name = "customer_id")
     private Customer customer;
@@ -28,4 +31,9 @@ public class Cart extends BaseEntity {
 
     @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CartDetail> cartDetails;
+
+    @PrePersist
+    public void prePersist() {
+        this.isCheckout = false;
+    }
 }

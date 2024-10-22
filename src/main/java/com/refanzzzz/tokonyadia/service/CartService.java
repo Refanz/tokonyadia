@@ -6,6 +6,7 @@ import com.refanzzzz.tokonyadia.dto.request.cart.CartSearchRequest;
 import com.refanzzzz.tokonyadia.dto.request.cart.CartUpdateRequest;
 import com.refanzzzz.tokonyadia.dto.response.cart.CartResponse;
 import com.refanzzzz.tokonyadia.dto.response.cart.CartUpdateResponse;
+import com.refanzzzz.tokonyadia.dto.response.cart.CartCheckoutResponse;
 import com.refanzzzz.tokonyadia.entity.Cart;
 import org.springframework.data.domain.Page;
 
@@ -21,6 +22,8 @@ public interface CartService {
     Cart getOne(String id);
 
     CartUpdateResponse updateCart(String id, CartUpdateRequest request);
+
+    CartCheckoutResponse checkoutCart(String id);
 
     void deleteCartItem(String cartId, String cartDetailId);
 }

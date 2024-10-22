@@ -1,13 +1,17 @@
 package com.refanzzzz.tokonyadia.service.impl;
 
 import com.refanzzzz.tokonyadia.constant.TransactionStatus;
-import com.refanzzzz.tokonyadia.dto.request.transaction.TransactionCheckoutRequest;
+import com.refanzzzz.tokonyadia.dto.request.transaction.TransactionCreateRequest;
 import com.refanzzzz.tokonyadia.dto.request.transaction.TransactionDetailRequest;
-import com.refanzzzz.tokonyadia.dto.request.transaction.TransactionRequest;
+import com.refanzzzz.tokonyadia.dto.request.transaction.TransactionSearchRequest;
+import com.refanzzzz.tokonyadia.dto.response.transaction.TransactionItemRequest;
 import com.refanzzzz.tokonyadia.dto.response.transaction.TransactionResponse;
-import com.refanzzzz.tokonyadia.entity.*;
+import com.refanzzzz.tokonyadia.entity.Customer;
+import com.refanzzzz.tokonyadia.entity.Product;
+import com.refanzzzz.tokonyadia.entity.Transaction;
+import com.refanzzzz.tokonyadia.entity.TransactionDetail;
+import com.refanzzzz.tokonyadia.repository.TransactionDetailRepository;
 import com.refanzzzz.tokonyadia.repository.TransactionRepository;
-import com.refanzzzz.tokonyadia.service.CartService;
 import com.refanzzzz.tokonyadia.service.CustomerService;
 import com.refanzzzz.tokonyadia.service.ProductService;
 import com.refanzzzz.tokonyadia.service.TransactionService;
@@ -34,13 +38,14 @@ import java.util.Optional;
 public class TransactionServiceImpl implements TransactionService {
 
     private TransactionRepository transactionRepository;
+    private TransactionDetailRepository transactionDetailRepository;
     private CustomerService customerService;
     private ProductService productService;
-    private CartService cartService;
 
     @Transactional(rollbackFor = Exception.class)
-    public TransactionResponse createTransaction(TransactionRequest transactionRequest) {
-        Customer customer = customerService.getOne(transactionRequest.getCustomerId());
+    @Override
+    public TransactionResponse createCustomerTransaction(TransactionCreateRequest transactionCreateRequest) {
+        Customer customer = customerService.getOne(transactionCreateRequest.getCustomerId());
 
         Transaction transaction = Transaction.builder()
                 .transactionStatus(TransactionStatus.PENDING)
@@ -48,9 +53,24 @@ public class TransactionServiceImpl implements TransactionService {
                 .transactionDetails(new ArrayList<>())
                 .build();
 
-        Transaction savedTransaction = transactionRepository.saveAndFlush(transaction);
+        transactionRepository.saveAndFlush(transaction);
 
-        return MapperUtil.toTransactionResponse(savedTransaction);
+        List<TransactionDetail> transactionDetails = new ArrayList<>();
+
+        for (TransactionItemRequest itemRequest : transactionCreateRequest.getTransactionItemRequests()) {
+            Product product = productService.getOne(itemRequest.getProductId());
+
+            transactionDetails.add(TransactionDetail.builder()
+                    .transaction(transaction)
+                    .product(product)
+                    .qty(itemRequest.getQty())
+                    .price(itemRequest.getPrice())
+                    .build());
+        }
+
+        transactionDetailRepository.saveAllAndFlush(transactionDetails);
+
+        return MapperUtil.toTransactionResponse(transaction);
     }
 
     @Transactional(rollbackFor = Exception.class)
@@ -76,7 +96,7 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Transactional(readOnly = true)
     @Override
-    public Page<TransactionResponse> getAll(TransactionRequest request) {
+    public Page<TransactionResponse> getAll(TransactionSearchRequest request) {
         Specification<Transaction> specification = TransactionSpecification.getTransactionSpecification(request);
         Sort sortBy = SortUtil.parseSort(request.getSortBy());
         Pageable pageable = PageRequest.of(request.getPage(), request.getSize(), sortBy);
@@ -90,34 +110,6 @@ public class TransactionServiceImpl implements TransactionService {
     @Override
     public TransactionResponse getTransactionById(String id) {
         Transaction transaction = getOne(id);
-        return MapperUtil.toTransactionResponse(transaction);
-    }
-
-    @Transactional(rollbackFor = Exception.class)
-    @Override
-    public TransactionResponse checkoutCart(TransactionCheckoutRequest request) {
-
-        Cart cart = cartService.getCartByStoreAndCustomer(request.getStoreId(), request.getCustomerId());
-        Transaction transaction = getOne(request.getTransactionId());
-
-        List<TransactionDetail> transactionDetails = new ArrayList<>();
-
-        for (CartDetail cartDetail : cart.getCartDetails()) {
-            if (cartDetail.getQty() > cartDetail.getProduct().getStock()) {
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The number of products you buy is more in stock");
-            } else {
-                transactionDetails.add(TransactionDetail.builder()
-                        .transaction(transaction)
-                        .qty(cartDetail.getQty())
-                        .product(cartDetail.getProduct())
-                        .price(cartDetail.getPrice())
-                        .build());
-            }
-        }
-
-        transaction.getTransactionDetails().addAll(transactionDetails);
-        transactionRepository.saveAndFlush(transaction);
-
         return MapperUtil.toTransactionResponse(transaction);
     }
 
