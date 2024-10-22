@@ -44,18 +44,10 @@ public class PaymentServiceImpl implements PaymentService {
     @Override
     public PaymentResponse createPayment(PaymentRequest request) {
         Transaction transaction = transactionService.getOne(request.getTransactionId());
+        long amount = calculateTotalTransactionCosts(transaction.getTransactionDetails());
 
         if (transaction.getTransactionDetails().isEmpty())
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Checkout first!");
-
-        long amount = 0;
-
-        for (TransactionDetail transactionDetail : transaction.getTransactionDetails()) {
-            Integer detailQty = transactionDetail.getQty();
-            Long detailPrice = transactionDetail.getPrice();
-
-            amount += detailQty * detailPrice;
-        }
 
         MidtransPaymentRequest midtransPaymentRequest = MidtransPaymentRequest.builder()
                 .transactionDetails(MidtransTransactionRequest.builder()
@@ -87,10 +79,20 @@ public class PaymentServiceImpl implements PaymentService {
         if (!validateSignatureKey(request))
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid signature key!");
 
-        Payment payment = paymentRepository.findByTransactionId(request.getOrderId())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Payment not found!"));
+        updatePaymentStatus(request.getOrderId(), request.getTransactionStatus());
+    }
 
-        PaymentStatus paymentStatus = PaymentStatus.getPaymentStatusByDesc(request.getTransactionStatus());
+    private boolean validateSignatureKey(MidtransNotificationRequest request) {
+        String rawSignature = request.getOrderId() + request.getStatusCode() + request.getGrossAmount() + MIDTRANS_API_SERVER_KEY;
+        String signatureKey = HashUtil.encryptThisString(rawSignature);
+
+        return request.getSignatureKey().equals(signatureKey);
+    }
+
+
+    private void updatePaymentStatus(String orderId, String status) {
+        Payment payment = getPaymentByTransactionId(orderId);
+        PaymentStatus paymentStatus = PaymentStatus.getPaymentStatusByDesc(status);
 
         if (paymentStatus != null && paymentStatus.equals(PaymentStatus.SETTLEMENT)) {
             payment.setPaymentStatus(paymentStatus);
@@ -100,10 +102,14 @@ public class PaymentServiceImpl implements PaymentService {
         paymentRepository.saveAndFlush(payment);
     }
 
-    private boolean validateSignatureKey(MidtransNotificationRequest request) {
-        String rawSignature = request.getOrderId() + request.getStatusCode() + request.getGrossAmount() + MIDTRANS_API_SERVER_KEY;
-        String signatureKey = HashUtil.encryptThisString(rawSignature);
+    private Long calculateTotalTransactionCosts(List<TransactionDetail> transactionDetails) {
+        return transactionDetails.stream()
+                .mapToLong(transactionDetail -> transactionDetail.getQty() * transactionDetail.getPrice())
+                .sum();
+    }
 
-        return request.getSignatureKey().equals(signatureKey);
+    private Payment getPaymentByTransactionId(String transactionId) {
+        return paymentRepository.findByTransactionId(transactionId).orElseThrow(()
+                -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Payment not found!"));
     }
 }
